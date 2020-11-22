@@ -3,12 +3,15 @@
 
 # Mater R Script 
 
-# Filepaths --------------------------------------------------------------------
-project_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
+RUN_SCRIPTS <- F
 
-code_file_path    <- file.path(project_file_path, "Code")
-data_file_path    <- file.path(project_file_path, "Data")
-outputs_file_path <- file.path(project_file_path, "Outputs")
+# Filepaths --------------------------------------------------------------------
+dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
+github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
+
+code_file_path    <- file.path(github_file_path, "Code")
+data_file_path    <- file.path(dropbox_file_path, "Data")
+outputs_file_path <- file.path(dropbox_file_path, "Outputs")
 tables_file_path  <- file.path(outputs_file_path, "tables")
 figures_file_path <- file.path(outputs_file_path, "figures")
 
@@ -23,21 +26,20 @@ library(ggplot2)
 library(ggthemes)
 library(hrbrthemes)
 library(labelled)
-
-
 #library(devtools)
 #install_github('mcooper/moranfast')
 library(moranfast)
+library(purrr)
 
 source(file.path(code_file_path, "_functions.R"))
 
 # Parameters -------------------------------------------------------------------
-# Define parameters that are used in multiple scripts
 
 # Vector of iso codes for countries where have both US and Chinese aid data and
 # Afrobarometer data
 iso_usaid <- c("MWI","NIG","UGA","SEN","BDI","SRL")
 
+# Independent variables
 IVs_china <- c("age", "muslim", "urban", "male",
                "distance_capital", "in_leader_adm1", "riotsprotests_china_before1stplanned_30km_average") %>%
   paste(collapse = " + ")
@@ -46,8 +48,14 @@ IVs_china_usaid <- c("age", "muslim", "urban", "male",
                      "distance_capital", "in_leader_adm1", "riotsprotests_china_usaid_before1stplanned_30km_average") %>%
   paste(collapse = " + ")
 
+# Fixed effects
+FEs <- "iso + afro.round" # "iso + afro.round"
+
+# Cluster variables
+CLUSTER_VAR <- "location_id" # townvill
+
 # Run Scripts ------------------------------------------------------------------
-if(F){
+if(RUN_SCRIPTS){
   source(file.path(code_file_path, "figure_01.R"))
   source(file.path(code_file_path, "figure_01_components.R"))
   
@@ -62,10 +70,15 @@ if(F){
   
   source(file.path(code_file_path, "figure_05.R"))
   source(file.path(code_file_path, "figure_06.R"))
+  source(file.path(code_file_path, "figure_07.R"))
+  
+  source(file.path(code_file_path, "morans_i_table.R"))
   
   #source(file.path(code_file_path, "spatial_autocor_calc.R"))
-  source(file.path(code_file_path, "spatial_autocor_figure.R"))
+  #source(file.path(code_file_path, "spatial_autocor_figure.R"))
 }
+
+
 
 
 

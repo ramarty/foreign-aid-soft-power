@@ -64,5 +64,32 @@ make_plot_all <- function(df,
 }
 
 
+calc_morans_i <- function(model){
+  
+  resid_df <- data.frame(
+    location_id = model$clustervar$location_id, 
+    residuals = model$residuals[,1] 
+  ) %>%
+    group_by(location_id) %>%
+    dplyr::summarise(resid_sum = sum(residuals)) %>%
+    mutate(location_id = location_id %>% as.character() %>% as.numeric())
+  
+  
+  df_sum <- df %>% 
+    group_by(location_id) %>%
+    dplyr::summarise(latitude = mean(latitude),
+                     longitude = mean(longitude)) %>%
+    left_join(resid_df, by = "location_id") %>%
+    filter(!is.na(resid_sum))
+  
+  mi <- moranfast(df_sum$resid_sum, df_sum$longitude, df_sum$latitude)
+  
+  out <- data.frame(observed = mi$observed,
+                    expected =mi$expected,
+                    sd = mi$sd,
+                    p.value = mi$p.value)
+  out$dv <- model$response[1,] %>% names()
 
+  return(out)
+}
 

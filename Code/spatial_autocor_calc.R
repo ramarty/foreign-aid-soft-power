@@ -1,7 +1,7 @@
 # Calculate Moran's I
 
 # Load Data --------------------------------------------------------------------
-df <- readRDS(file.path(project_file_path, "Data", "afro_china_data.Rds"))
+df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 df$townvill_latlon <- paste(df$latitude, df$longitude)
 

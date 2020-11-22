@@ -1,19 +1,24 @@
 # Figure 2 - Componenets
 
 # Load Data --------------------------------------------------------------------
-df <- readRDS(file.path(project_file_path, "Data", "afro_china_data.Rds"))
-
-## Restrict to rounds 2-5
-# df <- df %>%
-#   filter(afro.round %in% 2:5)
+df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 # Regressions ------------------------------------------------------------------
 #### Restricted Sample
-blvs_mult_parties_good.lm <- felm(as.formula(paste0("blvs_mult_parties_good ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",              IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_mult_parties_create_choice.lm <- felm(as.formula(paste0("blvs_mult_parties_create_choice ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_ctzn_should_join_any_cso.lm <- felm(as.formula(paste0("blvs_ctzn_should_join_any_cso ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",              IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_democ_best_system.lm <- felm(as.formula(paste0("blvs_democ_best_system ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_elec_good.lm <- felm(as.formula(paste0("blvs_elec_good ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_mult_parties_good.lm <- felm(as.formula(paste0("blvs_mult_parties_good ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_mult_parties_create_choice.lm <- felm(as.formula(paste0("blvs_mult_parties_create_choice ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_ctzn_should_join_any_cso.lm <- felm(as.formula(paste0("blvs_ctzn_should_join_any_cso ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_democ_best_system.lm <- felm(as.formula(paste0("blvs_democ_best_system ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_elec_good.lm <- felm(as.formula(paste0("blvs_elec_good ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+
+mi_full_df <- bind_rows(
+  calc_morans_i(blvs_mult_parties_good.lm),
+  calc_morans_i(blvs_mult_parties_create_choice.lm),
+  calc_morans_i(blvs_ctzn_should_join_any_cso.lm),
+  calc_morans_i(blvs_democ_best_system.lm),
+  calc_morans_i(blvs_elec_good.lm)
+) %>%
+  mutate(sample = "full")
 
 coef_df <- bind_rows(
   extract_coefs(blvs_mult_parties_good.lm) %>%
@@ -61,6 +66,10 @@ coef_df %>%
                 width = 10,
                 file_name = "figure_04_components.png")
 
+# Morans I ---------------------------------------------------------------------
+bind_rows(mi_full_df) %>%
+  mutate(figure = "fig_04_components") %>%
+  write.csv(file.path(data_file_path, "morans_i", "mi_04_components.csv"), row.names = F)
 
 
   

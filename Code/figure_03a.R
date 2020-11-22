@@ -1,15 +1,16 @@
 # Figure 2
 
 # Load Data --------------------------------------------------------------------
-df <- readRDS(file.path(project_file_path, "Data", "afro_china_data.Rds"))
-
-## Restrict to rounds 2-5
-# df <- df %>%
-#   filter(afro.round %in% 2:5)
+df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 # Regressions ------------------------------------------------------------------
 #### Full Sample
-formcolnpower.most.influence.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",              IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_full %in% T,]) 
+formcolnpower.most.influence.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+
+mi_full_df <- bind_rows(
+  calc_morans_i(formcolnpower.most.influence.lm)
+) %>%
+  mutate(sample = "full")
 
 coef_full_df <-
   extract_coefs(formcolnpower.most.influence.lm) %>%
@@ -17,7 +18,12 @@ coef_full_df <-
   mutate(subset = "Full Sample")
 
 #### Restricted Sample
-formcolnpower.most.influence.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted %in% T,]) 
+formcolnpower.most.influence.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+
+mi_restricted_df <- bind_rows(
+  calc_morans_i(formcolnpower.most.influence.lm)
+) %>%
+  mutate(sample = "restricted")
 
 coef_restricted_df <-
   extract_coefs(formcolnpower.most.influence.lm) %>%
@@ -46,3 +52,11 @@ coef_df %>%
   make_plot_all(height = 3,
                 width = 8,
                 file_name = "figure_03a.png")
+
+# Morans I ---------------------------------------------------------------------
+bind_rows(mi_full_df,
+          mi_restricted_df) %>%
+  mutate(figure = "fig_03a") %>%
+  write.csv(file.path(data_file_path, "morans_i", "mi_03a.csv"), row.names = F)
+
+

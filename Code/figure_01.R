@@ -1,7 +1,7 @@
 # Figure 1
 
 # Load Data --------------------------------------------------------------------
-df <- readRDS(file.path(project_file_path, "Data", "afro_china_data.Rds"))
+df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 ## Restrict to round 6
 df <- df %>%
@@ -9,8 +9,14 @@ df <- df %>%
 
 # Regressions ------------------------------------------------------------------
 #### Full Sample
-china_influential_index.lm <- felm(as.formula(paste0("china_influential_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",              IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_full %in% T,]) 
-china_positive_influence_index.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",IVs_china," | iso + afro.round | 0 | townvill")), data=df[df$sample_full %in% T,]) 
+china_influential_index.lm <- felm(as.formula(paste0("china_influential_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china_positive_influence_index.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+
+mi_full_df <- bind_rows(
+  calc_morans_i(china_influential_index.lm),
+  calc_morans_i(china_positive_influence_index.lm)
+) %>%
+  mutate(sample = "full")
 
 coef_full_df <- bind_rows(
   extract_coefs(china_influential_index.lm) %>%
@@ -21,8 +27,14 @@ coef_full_df <- bind_rows(
   mutate(subset = "Full Sample")
 
 #### Restricted Sample
-chinausa_influential_index.lm <- felm(as.formula(paste0("china_influential_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted %in% T,]) 
-chinausa_positive_influence_index.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | iso + afro.round | 0 | townvill")), data=df[df$sample_restricted %in% T,]) 
+chinausa_influential_index.lm <- felm(as.formula(paste0("china_influential_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+chinausa_positive_influence_index.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+
+mi_restricted_df <- bind_rows(
+  calc_morans_i(chinausa_influential_index.lm),
+  calc_morans_i(chinausa_positive_influence_index.lm)
+) %>%
+  mutate(sample = "restricted")
 
 coef_restricted_df <- bind_rows(
   extract_coefs(chinausa_influential_index.lm) %>%
@@ -57,4 +69,12 @@ coef_df %>%
   make_plot_all(height = 3,
                 width = 8,
                 file_name = "figure_01.png")
+
+# Morans I ---------------------------------------------------------------------
+bind_rows(mi_full_df,
+          mi_restricted_df) %>%
+  mutate(figure = "fig_01") %>%
+  write.csv(file.path(data_file_path, "morans_i", "mi_01.csv"), row.names = F)
+
+
   

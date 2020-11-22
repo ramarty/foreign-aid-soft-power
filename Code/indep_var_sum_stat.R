@@ -7,7 +7,7 @@ min_color <- "#e6f2ff"
 max_color <- "#0073e6"
 
 # Load Data --------------------------------------------------------------------
-df <- readRDS(file.path(project_file_path, "Data", "afro_china_data.Rds"))
+df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 df <- df %>%
   dplyr::select(iso, age, muslim, urban, male, distance_capital, in_leader_adm1, 
