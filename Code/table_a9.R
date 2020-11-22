@@ -11,10 +11,8 @@ df <- df %>%
          !is.na(urban),
          !is.na(male),
          !is.na(distance_capital),
-         !is.na(in_leader_adm1))
-
-# riotsprotests_china_before1stplanned_30km_average
-
+         !is.na(in_leader_adm1)) %>%
+  filter(sample_full %in% T)
 
 sum_stat <- function(var, name){
   
@@ -42,8 +40,6 @@ cat(" &   &      &      &     &     & First     & Last     \\\\ \n ")
 cat(" &   &      &      &     &     & round     & round    \\\\ \n ")
 cat(" & N & Mean & S.D. & Min & Max & available & available \\\\ \n ")
 cat("\\hline ")
-
-
 
 cat(" {\\bf Perceptions of China and US} & & & & & & & \\\\ \n ")
 sum_stat("china_influential_index",        "Belives China is Influential (Index)")
