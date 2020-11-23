@@ -72,6 +72,51 @@ coef_df %>%
                 width = 10,
                 file_name = "figure_05.png")
 
+# Full Table -------------------------------------------------------------------
+buffer <- 30
+
+stargazer(posimage_chinesepeople.lm,
+          posimage_businessinvetment.lm,
+          posimage_infordevinvetment.lm,
+          posimage_noninterference.lm,
+          posimage_supportinintlaffiars.lm,
+          posimage_productcost.lm,
+          dep.var.labels.include = T,
+          dep.var.labels = c("China Most","US Most","China Best","US Best"),
+          column.labels   = c("Influence", "Influence",  "Model", "Model"),
+          keep=c("completed_near_china.pl10.30km.bin", "planned_near_china.pl10.30km.bin"),
+          covariate.labels = c("China Completed","China Planned"),
+          dep.var.caption = "",
+          omit.stat = c("f","ser"), 
+          align=TRUE,
+          no.space=TRUE,
+          float=FALSE,
+          column.sep.width = "8pt",
+          report="vcs*",
+          digits = 2,
+          add.lines = list(
+            c("Completed vs. planned $p$-value", 
+              tryCatch(round(linearHypothesis(posimage_chinesepeople.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(posimage_businessinvetment.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(posimage_infordevinvetment.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(posimage_noninterference.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(posimage_supportinintlaffiars.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(posimage_productcost.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")) ),
+            #c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Morans I P-Value",
+              calc_morans_i(posimage_chinesepeople.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(posimage_businessinvetment.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(posimage_infordevinvetment.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(posimage_noninterference.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(posimage_supportinintlaffiars.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(posimage_productcost.lm)$p.value %>% round(ROUND_NUM)
+            ),
+            c("Spatial Lag of Dep Var Included", "N", "Y", "N", "N", "N", "N"),
+            c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y","Y"),
+            c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
+          out=file.path(tables_file_path, "table_01_components_full.tex"))
+
+
 # Morans I ---------------------------------------------------------------------
 bind_rows(mi_full_df) %>%
   mutate(figure = "fig_05") %>%
