@@ -3,6 +3,10 @@
 # Load Data --------------------------------------------------------------------
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
+# Restrict to rounds 2-5
+df <- df %>%
+  filter(afro.round %in% 2:5)
+
 # Regressions ------------------------------------------------------------------
 #### Restricted Sample
 lib_dem_val_index.lm <- felm(as.formula(paste0("lib_dem_val_index ~ completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 

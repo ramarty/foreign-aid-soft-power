@@ -121,8 +121,6 @@ p <- df_results %>%
   geom_linerange(position = position_dodge(width=2.5)) +
   geom_point(position = position_dodge(width=2.5)) +
   coord_flip() +
-  facet_wrap(~subset,
-             scales = "free_x") +
   labs(x = "Buffer\nSize\n(km)",
        y="Coef (+/- 95% CI)",
        linetype = "",
@@ -159,8 +157,6 @@ p <- df_results %>%
   geom_linerange(position = position_dodge(width=2.75)) +
   geom_point(position = position_dodge(width=2.75)) +
   coord_flip() +
-  facet_wrap(~subset,
-             scales = "free_x") +
   labs(x = "Buffer\nSize\n(km)",
        y="Coef (+/- 95% CI)",
        linetype = "",
@@ -197,8 +193,6 @@ p <- df_results %>%
   geom_linerange(position = position_dodge(width=2.75)) +
   geom_point(position = position_dodge(width=2.75)) +
   coord_flip() +
-  facet_wrap(~subset,
-             scales = "free_x") +
   labs(x = "Buffer\nSize\n(km)",
        y="Coef (+/- 95% CI)",
        linetype = "",

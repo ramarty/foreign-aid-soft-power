@@ -62,7 +62,7 @@ stargazer(influential_index.full.lm,
               calc_morans_i(china.best.dev.model.full.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(usa.best.dev.model.full.lm)$p.value %>% round(ROUND_NUM)
             ),
-            c("Spatial Lag of Dep Var Included", "Y", "Y", "Y", "Y", "Y", "Y"),
+            c("Spatial Lag of Dep Var Included", "N", "N", "N", "N", "N", "N"),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer, buffer)),
           out=file.path(tables_file_path, "table_infrastructure.tex"))

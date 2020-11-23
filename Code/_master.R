@@ -52,7 +52,7 @@ IVs_china_usaid <- c("age", "muslim", "urban", "male",
 FEs <- "iso + afro.round" # "iso + afro.round"
 
 # Cluster variables
-CLUSTER_VAR <- "location_id" # townvill
+CLUSTER_VAR <- "location_id" # "location_id" # townvill
 
 # Run Scripts ------------------------------------------------------------------
 if(RUN_SCRIPTS){
