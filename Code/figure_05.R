@@ -82,8 +82,8 @@ stargazer(posimage_chinesepeople.lm,
           posimage_supportinintlaffiars.lm,
           posimage_productcost.lm,
           dep.var.labels.include = T,
-          dep.var.labels = c("China Most","US Most","China Best","US Best"),
-          column.labels   = c("Influence", "Influence",  "Model", "Model"),
+          dep.var.labels = c("Chinese People ","Business","Inf / Development","Non-Interference","Support in","Cost of"),
+          column.labels   = c("and Culture", "Investment", "Investment",      "Policy",           "Intl Affairs", "Chinese Products"),
           keep=c("completed_near_china.pl10.30km.bin", "planned_near_china.pl10.30km.bin"),
           covariate.labels = c("China Completed","China Planned"),
           dep.var.caption = "",
@@ -114,8 +114,7 @@ stargazer(posimage_chinesepeople.lm,
             c("Spatial Lag of Dep Var Included", "N", "Y", "N", "N", "N", "N"),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y","Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
-          out=file.path(tables_file_path, "table_01_components_full.tex"))
-
+          out=file.path(tables_file_path, "table_05_full.tex"))
 
 # Morans I ---------------------------------------------------------------------
 bind_rows(mi_full_df) %>%

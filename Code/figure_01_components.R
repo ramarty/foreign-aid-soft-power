@@ -88,7 +88,7 @@ coef_df %>%
                     "Chinese Aid Planned",
                     "USA Aid Completed",
                     "USA Aid Planned")) %>%
-  make_plot_all(height = 7,
+  make_plot_all(height = 6,
                 width = 10,
                 file_name = "figure_01_components.png")
 

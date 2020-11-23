@@ -72,6 +72,50 @@ coef_df %>%
                 width = 10,
                 file_name = "figure_06.png")
 
+# Full Table -------------------------------------------------------------------
+buffer <- 30
+
+stargazer(negimage_cooperateundemocratic.lm,
+          negimage_chinesecitizenbehavior.lm,
+          negimage_resourceextraction.lm,
+          negimage_takingjobsbusiness.lm,
+          negimage_landgrabbing.lm,
+          negimage_productquality.lm,
+          dep.var.labels.include = T,
+          dep.var.labels = c("Coop With",     "Behavior of ",    "Resource",   "Taking Jobs",   "Land",     "Product"),
+          column.labels   = c("Undem Leaders", "Chinese Citzns", "Extraction", "and Business",  "Grabbing", "Quality"),
+          keep=c("completed_near_china.pl10.30km.bin", "planned_near_china.pl10.30km.bin"),
+          covariate.labels = c("China Completed","China Planned"),
+          dep.var.caption = "",
+          omit.stat = c("f","ser"), 
+          align=TRUE,
+          no.space=TRUE,
+          float=FALSE,
+          column.sep.width = "8pt",
+          report="vcs*",
+          digits = 2,
+          add.lines = list(
+            c("Completed vs. planned $p$-value", 
+              tryCatch(round(linearHypothesis(negimage_cooperateundemocratic.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(negimage_chinesecitizenbehavior.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(negimage_resourceextraction.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(negimage_takingjobsbusiness.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(negimage_landgrabbing.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
+              tryCatch(round(linearHypothesis(negimage_productquality.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")) ),
+            #c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Morans I P-Value",
+              calc_morans_i(negimage_cooperateundemocratic.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(negimage_chinesecitizenbehavior.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(negimage_resourceextraction.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(negimage_takingjobsbusiness.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(negimage_landgrabbing.lm)$p.value %>% round(ROUND_NUM),
+              calc_morans_i(negimage_productquality.lm)$p.value %>% round(ROUND_NUM)
+            ),
+            c("Spatial Lag of Dep Var Included", "N", "N", "N", "N", "N", "N"),
+            c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y","Y"),
+            c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
+          out=file.path(tables_file_path, "table_06_full.tex"))
+
 # Morans I ---------------------------------------------------------------------
 bind_rows(mi_full_df) %>%
   mutate(figure = "fig_06") %>%
