@@ -3,10 +3,6 @@
 # Load Data --------------------------------------------------------------------
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
-## Restrict to rounds 2-5
-#df <- df %>%
-#  filter(afro.round %in% 2:5)
-
 # Regressions ------------------------------------------------------------------
 influential_index.full.lm <- felm(as.formula(paste0("china_influential_index ~               completed_near_china.pl10.30km.construct.bin + planned_near_china.pl10.30km.construct.bin + completed_near_china.pl10.30km.noconstruct.bin + planned_near_china.pl10.30km.noconstruct.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 positive_influence_index.full.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.30km.construct.bin + planned_near_china.pl10.30km.construct.bin + completed_near_china.pl10.30km.noconstruct.bin + planned_near_china.pl10.30km.noconstruct.bin + ",IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 

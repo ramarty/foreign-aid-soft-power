@@ -56,26 +56,40 @@ CLUSTER_VAR <- "location_id" # "location_id" # townvill
 
 # Run Scripts ------------------------------------------------------------------
 if(RUN_SCRIPTS){
-  source(file.path(code_file_path, "figure_01.R"))
-  source(file.path(code_file_path, "figure_01_components.R"))
   
-  source(file.path(code_file_path, "figure_02.R"))
-  source(file.path(code_file_path, "figure_02_components.R"))
+  ## Summary Stats
+  sum_stat_file_path <- file.path(code_file_path, "summary_statistics")
+  source(file.path(sum_stat_file_path, "table_a1.R"))
+  source(file.path(sum_stat_file_path, "table_a2.R"))
+  source(file.path(sum_stat_file_path, "table_a3.R"))
+  source(file.path(sum_stat_file_path, "table_a4.R"))
+  source(file.path(sum_stat_file_path, "table_a9.R"))
+  source(file.path(sum_stat_file_path, "indep_var_sum_stat.R"))
   
-  source(file.path(code_file_path, "figure_03a.R"))
-  source(file.path(code_file_path, "figure_03b.R"))
+  ## Models: Rounds 6
+  models_r6_file_path <- file.path(code_file_path, "models_round_6")
+  source(file.path(models_r6_file_path, "figure_01.R"))
+  source(file.path(models_r6_file_path, "figure_01_2009.R"))
+  source(file.path(models_r6_file_path, "figure_01_2008.R"))
+  source(file.path(models_r6_file_path, "figure_01_infrastructure.R"))
+  source(file.path(models_r6_file_path, "figure_03.R"))
+  source(file.path(models_r6_file_path, "figure_05.R"))
+  source(file.path(models_r6_file_path, "figure_06.R"))
+  source(file.path(models_r6_file_path, "figure_07.R"))
+
+  ## Models: Round 2-5
+  models_r2_5_file_path <- file.path(code_file_path, "models_rounds_2-5")
+  source(file.path(models_r2_5_file_path, figure_02.R))
+  source(file.path(models_r2_5_file_path, figure_04.R))
   
-  source(file.path(code_file_path, "figure_04.R"))
-  source(file.path(code_file_path, "figure_04_components.R"))
+  ## Models: Round 4
+  models_r4_file_path <- file.path(code_file_path, "models_round_4")
+  source(file.path(models_r4_file_path, "round_4_models.R"))
   
-  source(file.path(code_file_path, "figure_05.R"))
-  source(file.path(code_file_path, "figure_06.R"))
-  source(file.path(code_file_path, "figure_07.R"))
+  ## Models: Round 4
+  buffer_sensitivity_file_path <- file.path(code_file_path, "buffer_sensitivity")
+  source(file.path(buffer_sensitivity_file_path, "buffer_sensitivity.R"))
   
-  source(file.path(code_file_path, "morans_i_table.R"))
-  
-  #source(file.path(code_file_path, "spatial_autocor_calc.R"))
-  #source(file.path(code_file_path, "spatial_autocor_figure.R"))
 }
 
 
