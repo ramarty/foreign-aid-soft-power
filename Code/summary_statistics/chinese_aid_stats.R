@@ -8,5 +8,5 @@ chinese_aid <- chinese_aid %>%
   filter(sample == 1)
 
 # Stats ------------------------------------------------------------------------
-chinese_aid
-
+table(!is.na(chinese_aid$start_actual_year))
+table(!is.na(chinese_aid$end_actual_year))
