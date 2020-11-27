@@ -5,12 +5,12 @@ df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 # Regressions ------------------------------------------------------------------
 #### Full Sample
-posimage_chinesepeople.lm <- felm(as.formula(paste0("posimage_chinesepeople ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-posimage_businessinvetment.lm <- felm(as.formula(paste0("posimage_businessinvetment ~ posimage_businessinvetment_splag + completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-posimage_infordevinvetment.lm <- felm(as.formula(paste0("posimage_infordevinvetment ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-posimage_noninterference.lm <- felm(as.formula(paste0("posimage_noninterference ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-posimage_supportinintlaffiars.lm <- felm(as.formula(paste0("posimage_supportinintlaffiars ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-posimage_productcost.lm <- felm(as.formula(paste0("posimage_productcost ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+posimage_chinesepeople.lm        <- felm(as.formula(paste0("posimage_chinesepeople ~                                        completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+posimage_businessinvetment.lm    <- felm(as.formula(paste0("posimage_businessinvetment ~ posimage_businessinvetment_splag + completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+posimage_infordevinvetment.lm    <- felm(as.formula(paste0("posimage_infordevinvetment ~                                    completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+posimage_noninterference.lm      <- felm(as.formula(paste0("posimage_noninterference ~                                      completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+posimage_supportinintlaffiars.lm <- felm(as.formula(paste0("posimage_supportinintlaffiars ~                                 completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+posimage_productcost.lm          <- felm(as.formula(paste0("posimage_productcost ~                                          completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
 coef_df <- bind_rows(
   extract_coefs(posimage_chinesepeople.lm) %>%

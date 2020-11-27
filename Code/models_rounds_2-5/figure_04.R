@@ -9,12 +9,12 @@ df <- df %>%
 
 # Regressions ------------------------------------------------------------------
 #### Restricted Sample
-lib_dem_val_index.lm <- felm(as.formula(paste0("lib_dem_val_index ~                                                                                completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_mult_parties_good.restricted.lm <- felm(as.formula(paste0("blvs_mult_parties_good ~                                                           completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+lib_dem_val_index.lm                          <- felm(as.formula(paste0("lib_dem_val_index ~                                                       completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_mult_parties_good.restricted.lm          <- felm(as.formula(paste0("blvs_mult_parties_good ~                                                  completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
 blvs_mult_parties_create_choice.restricted.lm <- felm(as.formula(paste0("blvs_mult_parties_create_choice ~ blvs_mult_parties_create_choice_splag + completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_ctzn_should_join_any_cso.restricted.lm <- felm(as.formula(paste0("blvs_ctzn_should_join_any_cso ~     blvs_ctzn_should_join_any_cso_splag +   completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_democ_best_system.restricted.lm <- felm(as.formula(paste0("blvs_democ_best_system ~                                                           completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
-blvs_elec_good.restricted.lm <- felm(as.formula(paste0("blvs_elec_good ~                                                                           completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_ctzn_should_join_any_cso.restricted.lm   <- felm(as.formula(paste0("blvs_ctzn_should_join_any_cso ~   blvs_ctzn_should_join_any_cso_splag +   completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_democ_best_system.restricted.lm          <- felm(as.formula(paste0("blvs_democ_best_system ~                                                  completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+blvs_elec_good.restricted.lm                  <- felm(as.formula(paste0("blvs_elec_good ~                                                          completed_near_ukaid.30km.bin + planned_near_ukaid.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
 
 coef_df <- bind_rows(
   extract_coefs(lib_dem_val_index.lm) %>%
@@ -124,8 +124,8 @@ stargazer(lib_dem_val_index.lm,
               calc_morans_i(blvs_democ_best_system.restricted.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(blvs_elec_good.restricted.lm)$p.value %>% round(ROUND_NUM)
             ),
-            c("Spatial Lag of Dep Var Included", "N", "Y", "Y", "N", "N"),
-            c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y"),
+            c("Spatial Lag of Dep Var Included", "N", "N", "Y", "Y", "N", "N"),
+            c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer)),
           out=file.path(tables_file_path, "table_04_restricted.tex"))
 

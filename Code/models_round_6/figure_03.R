@@ -5,8 +5,8 @@ df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 # Regressions ------------------------------------------------------------------
 #### Full Sample
-formcolnpower.most.influence.full.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-formcolnpower.best.dev.model.full.lm <- felm(as.formula(paste0("formcolnpower.best.dev.model ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+formcolnpower.most.influence.full.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+formcolnpower.best.dev.model.full.lm <- felm(as.formula(paste0("formcolnpower.best.dev.model ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
 coef_full_df <- bind_rows(
   extract_coefs(formcolnpower.most.influence.full.lm) %>%
@@ -18,8 +18,8 @@ coef_full_df <- bind_rows(
   mutate(subset = "Full Sample")
 
 #### Restricted Sample
-formcolnpower.most.influence.restricted.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
-formcolnpower.best.dev.model.restricted.lm <- felm(as.formula(paste0("formcolnpower.best.dev.model ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+formcolnpower.most.influence.restricted.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+formcolnpower.best.dev.model.restricted.lm <- felm(as.formula(paste0("formcolnpower.best.dev.model ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + completed_near_usaid.30km.bin + planned_near_usaid.30km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
 
 coef_restricted_df <- bind_rows(
   extract_coefs(formcolnpower.most.influence.restricted.lm) %>%
