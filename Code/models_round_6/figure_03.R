@@ -86,7 +86,7 @@ stargazer(formcolnpower.most.influence.full.lm,
             c("Completed vs. planned $p$-value", 
               tryCatch(round(linearHypothesis(formcolnpower.most.influence.full.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(formcolnpower.best.dev.model.full.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(formcolnpower.most.influence.full.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(formcolnpower.best.dev.model.full.lm)$p.value %>% round(ROUND_NUM)

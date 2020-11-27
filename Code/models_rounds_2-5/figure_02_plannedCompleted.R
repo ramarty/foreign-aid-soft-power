@@ -98,18 +98,19 @@ coef_df %>%
   filter(model == "Liberal\ndemocratic\nvalues\n(index)") %>%
   make_plot_all(height = 3,
                 width = 8,
-                file_name = "figure_02.png")
+                file_name = "figure_02_plannedCompleted.png")
 
 # Figure - Components ----------------------------------------------------------
 coef_df %>%
   filter(model != "Liberal\ndemocratic\nvalues\n(index)") %>%
   make_plot_all(height = 7,
                 width = 10,
-                file_name = "figure_02_components.png")
+                file_name = "figure_02_plannedCompleted_components.png")
 
 # Full Table -------------------------------------------------------------------
 buffer <- 30
-planned_cutoff_year <- 2010
+planned_cutoff_year <- "N/A"
+
 stargazer(lib_dem_val_index.full.lm,
           blvs_mult_parties_good.full.lm,
           blvs_mult_parties_create_choice.full.lm,
@@ -137,7 +138,7 @@ stargazer(lib_dem_val_index.full.lm,
               tryCatch(round(linearHypothesis(blvs_ctzn_should_join_any_cso.full.lm, "completed_near_china.plNA.30km.bin = planned_near_china.plNAcmpltd.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(blvs_democ_best_system.full.lm, "completed_near_china.plNA.30km.bin = planned_near_china.plNAcmpltd.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(blvs_elec_good.full.lm, "completed_near_china.plNA.30km.bin = planned_near_china.plNAcmpltd.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(lib_dem_val_index.full.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(blvs_mult_parties_good.full.lm)$p.value %>% round(ROUND_NUM),
@@ -188,7 +189,7 @@ stargazer(lib_dem_val_index.restricted.lm,
               tryCatch(round(linearHypothesis(blvs_ctzn_should_join_any_cso.restricted.lm, "completed_near_usaid.30km.bin = planned_near_usaid.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(blvs_democ_best_system.restricted.lm, "completed_near_usaid.30km.bin = planned_near_usaid.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(blvs_elec_good.restricted.lm, "completed_near_usaid.30km.bin = planned_near_usaid.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(lib_dem_val_index.restricted.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(blvs_mult_parties_good.restricted.lm)$p.value %>% round(ROUND_NUM),

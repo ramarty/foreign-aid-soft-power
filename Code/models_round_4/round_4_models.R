@@ -32,7 +32,7 @@ stargazer(china.help.country.lm,
             c("Completed vs. planned infrastructure $p$-value", 
               tryCatch(round(linearHypothesis(china.help.country.lm, "completed_near_china.plNA.30km.bin = planned_near_china.plNA.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(usa.help.country.lm, "completed_near_china.plNA.30km.bin = planned_near_china.plNA.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(china.help.country.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(usa.help.country.lm)$p.value %>% round(ROUND_NUM)
