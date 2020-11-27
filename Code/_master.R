@@ -79,8 +79,9 @@ if(RUN_SCRIPTS){
 
   ## Models: Round 2-5
   models_r2_5_file_path <- file.path(code_file_path, "models_rounds_2-5")
-  source(file.path(models_r2_5_file_path, figure_02.R))
-  source(file.path(models_r2_5_file_path, figure_04.R))
+  source(file.path(models_r2_5_file_path, "figure_02.R"))
+  source(file.path(models_r2_5_file_path, "figure_04.R"))
+  source(file.path(models_r2_5_file_path, "figure_02_plannedCompleted.R"))
   
   ## Models: Round 4
   models_r4_file_path <- file.path(code_file_path, "models_round_4")
