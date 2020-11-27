@@ -94,18 +94,28 @@ coef_df <- coef_df %>%
 # Figure -----------------------------------------------------------------------
 coef_df %>%
   filter(model %in% c("Believes\nChina is\ninfluencial\n(index)",
-                      "Belives\nChinese presence\nis positive\n(index)")) %>%
-  make_plot_all(height = 4,
+                      "Believes\nChinese model\nis most\ninfluential",
+                      "Believes\nUS model\nis most\ninfluential")) %>%
+  make_plot_all(height = 6,
                 width = 10,
-                file_name = "figure_01.png")
+                file_name = "figure_01a.png")
 
 # Figure -----------------------------------------------------------------------
 coef_df %>%
-  filter(!(model %in% c("Believes\nChina is\ninfluencial\n(index)",
-                      "Belives\nChinese presence\nis positive\n(index)"))) %>%
+  filter(model %in% c("Belives\nChinese presence\nis positive\n(index)",
+                      "Believes\nChinese model\nis best",
+                      "Believes\nUS model\nis best")) %>%
   make_plot_all(height = 6,
                 width = 10,
-                file_name = "figure_01_components.png")
+                file_name = "figure_01b.png")
+
+# Figure -----------------------------------------------------------------------
+# coef_df %>%
+#   filter(!(model %in% c("Believes\nChina is\ninfluencial\n(index)",
+#                       "Belives\nChinese presence\nis positive\n(index)"))) %>%
+#   make_plot_all(height = 6,
+#                 width = 10,
+#                 file_name = "figure_01_components.png")
 
 # Full Table -------------------------------------------------------------------
 buffer <- 30
