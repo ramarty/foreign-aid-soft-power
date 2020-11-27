@@ -12,16 +12,6 @@ posimage_noninterference.lm <- felm(as.formula(paste0("posimage_noninterference 
 posimage_supportinintlaffiars.lm <- felm(as.formula(paste0("posimage_supportinintlaffiars ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 posimage_productcost.lm <- felm(as.formula(paste0("posimage_productcost ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
-mi_full_df <- bind_rows(
-  calc_morans_i(posimage_chinesepeople.lm),
-  calc_morans_i(posimage_businessinvetment.lm),
-  calc_morans_i(posimage_infordevinvetment.lm),
-  calc_morans_i(posimage_noninterference.lm),
-  calc_morans_i(posimage_supportinintlaffiars.lm),
-  calc_morans_i(posimage_productcost.lm)
-) %>%
-  mutate(sample = "full")
-
 coef_df <- bind_rows(
   extract_coefs(posimage_chinesepeople.lm) %>%
     mutate(model = "Chinese\npeople and\nculture"),
@@ -74,6 +64,7 @@ coef_df %>%
 
 # Full Table -------------------------------------------------------------------
 buffer <- 30
+planned_cutoff_year <- 2010
 
 stargazer(posimage_chinesepeople.lm,
           posimage_businessinvetment.lm,
@@ -102,7 +93,7 @@ stargazer(posimage_chinesepeople.lm,
               tryCatch(round(linearHypothesis(posimage_noninterference.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(posimage_supportinintlaffiars.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(posimage_productcost.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            #c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(posimage_chinesepeople.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(posimage_businessinvetment.lm)$p.value %>% round(ROUND_NUM),
@@ -115,10 +106,5 @@ stargazer(posimage_chinesepeople.lm,
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y","Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
           out=file.path(tables_file_path, "table_05_full.tex"))
-
-# Morans I ---------------------------------------------------------------------
-bind_rows(mi_full_df) %>%
-  mutate(figure = "fig_05") %>%
-  write.csv(file.path(data_file_path, "morans_i", "mi_05.csv"), row.names = F)
 
 

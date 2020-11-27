@@ -12,16 +12,6 @@ negimage_takingjobsbusiness.lm <- felm(as.formula(paste0("negimage_takingjobsbus
 negimage_landgrabbing.lm <- felm(as.formula(paste0("negimage_landgrabbing ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 negimage_productquality.lm <- felm(as.formula(paste0("negimage_productquality ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
-mi_full_df <- bind_rows(
-  calc_morans_i(negimage_cooperateundemocratic.lm),
-  calc_morans_i(negimage_chinesecitizenbehavior.lm),
-  calc_morans_i(negimage_resourceextraction.lm),
-  calc_morans_i(negimage_takingjobsbusiness.lm),
-  calc_morans_i(negimage_landgrabbing.lm),
-  calc_morans_i(negimage_productquality.lm)
-) %>%
-  mutate(sample = "full")
-
 coef_df <- bind_rows(
   extract_coefs(negimage_cooperateundemocratic.lm) %>%
     mutate(model = "Chinese\ncooperation\nw/ undemocratic\nleaders"),
@@ -74,6 +64,7 @@ coef_df %>%
 
 # Full Table -------------------------------------------------------------------
 buffer <- 30
+planned_cutoff_year <- 2010
 
 stargazer(negimage_cooperateundemocratic.lm,
           negimage_chinesecitizenbehavior.lm,
@@ -102,7 +93,7 @@ stargazer(negimage_cooperateundemocratic.lm,
               tryCatch(round(linearHypothesis(negimage_takingjobsbusiness.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(negimage_landgrabbing.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(negimage_productquality.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            #c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(negimage_cooperateundemocratic.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(negimage_chinesecitizenbehavior.lm)$p.value %>% round(ROUND_NUM),
@@ -115,11 +106,4 @@ stargazer(negimage_cooperateundemocratic.lm,
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y","Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
           out=file.path(tables_file_path, "table_06_full.tex"))
-
-# Morans I ---------------------------------------------------------------------
-bind_rows(mi_full_df) %>%
-  mutate(figure = "fig_06") %>%
-  write.csv(file.path(data_file_path, "morans_i", "mi_06.csv"), row.names = F)
-
-
 

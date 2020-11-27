@@ -40,11 +40,12 @@ coef_df <- bind_rows(
 #### Append Coefficients
 coef_df <- coef_df %>%
   dplyr::mutate(model = model %>%
-           factor(levels = rev(c("Believes\nmultiple\nparties\nare good",
-                                 "Believes\nmultiple\nparties\ncreate choice",
-                             "Believes\ncitizens\nshould join\nany CSO",
-                             "Believes\ndemocracy\nis best\nsystem",
-                             "Believes\nelections\nare good"))))
+                  factor(levels = rev(c("Liberal\ndemocratic\nvalues\n(index)",
+                                        "Believes\nmultiple\nparties\nare good",
+                                        "Believes\nmultiple\nparties\ncreate choice",
+                                        "Believes\ncitizens\nshould join\nany CSO",
+                                        "Believes\ndemocracy\nis best\nsystem",
+                                        "Believes\nelections\nare good"))))
 
 coef_df <- coef_df %>%
   mutate(var = var %>% 
@@ -63,14 +64,14 @@ coef_df <- coef_df %>%
 
 # Figure -----------------------------------------------------------------------
 coef_df %>%
-  filter(model == "Liberal\ndemocratic\nvalues\n(index)")
-make_plot_all(height = 7,
-              width = 10,
-              file_name = "figure_04.png")
+  filter(model == "Liberal\ndemocratic\nvalues\n(index)") %>%
+  make_plot_all(height = 7,
+                width = 10,
+                file_name = "figure_04.png")
 
 # Figure -----------------------------------------------------------------------
 coef_df %>%
-  filter(model != "Liberal\ndemocratic\nvalues\n(index)")
+  filter(model != "Liberal\ndemocratic\nvalues\n(index)") %>%
   make_plot_all(height = 7,
                 width = 10,
                 file_name = "figure_04_components.png")
@@ -129,4 +130,3 @@ stargazer(lib_dem_val_index.lm,
           out=file.path(tables_file_path, "table_04_restricted.tex"))
 
 
-  

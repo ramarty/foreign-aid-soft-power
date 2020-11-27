@@ -11,15 +11,6 @@ china.econpol.influence.positive_DONTKNOW.lm <- felm(as.formula(paste0("china.ec
 china.aid.good.job.meet.country.needs_DONTKNOW.lm <- felm(as.formula(paste0("china.aid.good.job.meet.country.needs_DONTKNOW ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 china.help.country_DONTKNOW.lm <- felm(as.formula(paste0("china.help.country_DONTKNOW ~ china.help.country_DONTKNOW_splag + completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
-mi_full_df <- bind_rows(
-  calc_morans_i(china_dontknow_index.lm),
-  calc_morans_i(china.influence.econ.activity_DONTKNOW.lm),
-  calc_morans_i(china.econpol.influence.positive_DONTKNOW.lm),
-  calc_morans_i(china.aid.good.job.meet.country.needs_DONTKNOW.lm),
-  calc_morans_i(china.help.country_DONTKNOW.lm)
-) %>%
-  mutate(sample = "full")
-
 coef_df <- bind_rows(
   extract_coefs(china_dontknow_index.lm) %>%
     mutate(model = "China Questions\nDon't Know Index"),
@@ -68,6 +59,7 @@ coef_df %>%
 
 # Full Table -------------------------------------------------------------------
 buffer <- 30
+planned_cutoff_year <- 2010
 
 stargazer(china_dontknow_index.lm,
           china.influence.econ.activity_DONTKNOW.lm,
@@ -94,7 +86,7 @@ stargazer(china_dontknow_index.lm,
               tryCatch(round(linearHypothesis(china.econpol.influence.positive_DONTKNOW.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(china.aid.good.job.meet.country.needs_DONTKNOW.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")),
               tryCatch(round(linearHypothesis(china.help.country_DONTKNOW.lm, "completed_near_china.pl10.30km.bin = planned_near_china.pl10.30km.bin")[2,4],3), error = function(e) print("NA")) ),
-            #c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
+            c("Planned Year Cut Off",planned_cutoff_year,planned_cutoff_year,planned_cutoff_year,planned_cutoff_year),
             c("Morans I P-Value",
               calc_morans_i(china_dontknow_index.lm)$p.value %>% round(ROUND_NUM),
               calc_morans_i(china.influence.econ.activity_DONTKNOW.lm)$p.value %>% round(ROUND_NUM),
@@ -106,11 +98,6 @@ stargazer(china_dontknow_index.lm,
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer)),
           out=file.path(tables_file_path, "table_07_full.tex"))
-
-# Morans I ---------------------------------------------------------------------
-bind_rows(mi_full_df) %>%
-  mutate(figure = "fig_07") %>%
-  write.csv(file.path(data_file_path, "morans_i", "mi_07.csv"), row.names = F)
 
 
 

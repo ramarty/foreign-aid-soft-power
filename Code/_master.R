@@ -87,7 +87,7 @@ if(RUN_SCRIPTS){
   models_r4_file_path <- file.path(code_file_path, "models_round_4")
   source(file.path(models_r4_file_path, "round_4_models.R"))
   
-  ## Models: Round 4
+  ## Buffer Sensitivity Analysis
   buffer_sensitivity_file_path <- file.path(code_file_path, "buffer_sensitivity")
   source(file.path(buffer_sensitivity_file_path, "buffer_sensitivity.R"))
   
