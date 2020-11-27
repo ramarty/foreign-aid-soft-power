@@ -3,7 +3,7 @@
 
 # Mater R Script 
 
-RUN_SCRIPTS <- F
+RUN_SCRIPTS <- T
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
