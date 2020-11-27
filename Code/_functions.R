@@ -57,7 +57,7 @@ make_plot_all <- function(df,
            pch = guide_legend(reverse=T)) +
     scale_linetype_manual(values=c("solid","dashed","solid","dashed")) +
     scale_shape_manual(values=c(16,17,16,17)) +
-    scale_color_manual(values=c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")) +
+    scale_color_manual(values=figure_colors) +
     ggsave(file.path(figures_file_path, file_name),
            height = height, width = width)
   

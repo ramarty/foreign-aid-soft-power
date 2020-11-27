@@ -13,6 +13,7 @@ usa.help.country.lm <- felm(as.formula(paste0("usa.help.country ~ usa.help.count
 # Full Table -------------------------------------------------------------------
 buffer <- 30
 planned_cutoff_year <- "N/A"
+
 stargazer(china.help.country.lm,
           usa.help.country.lm,
           dep.var.labels.include = T,

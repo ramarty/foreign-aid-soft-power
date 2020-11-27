@@ -9,36 +9,48 @@ df_results <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
   
   print(buffer)
   
-  ## Full
-  lib_dem_val_index.full.lm              <- felm(as.formula(paste0("lib_dem_val_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  china_influential_index.full.lm        <- felm(as.formula(paste0("china_influential_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  china_positive_influence_index.full.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  formcolnpower.most.influence.full.lm   <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  formcolnpower.best.dev.model.full.lm   <- felm(as.formula(paste0("formcolnpower.best.dev.model ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  posimage_chinesepeople.full.lm   <- felm(as.formula(paste0("posimage_chinesepeople ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  posimage_businessinvetment.full.lm   <- felm(as.formula(paste0("posimage_businessinvetment ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  posimage_infordevinvetment.full.lm   <- felm(as.formula(paste0("posimage_infordevinvetment ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  posimage_noninterference.full.lm   <- felm(as.formula(paste0("posimage_noninterference ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  posimage_supportinintlaffiars.full.lm   <- felm(as.formula(paste0("posimage_supportinintlaffiars ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  posimage_productcost.full.lm   <- felm(as.formula(paste0("posimage_productcost ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  negimage_cooperateundemocratic.full.lm   <- felm(as.formula(paste0("negimage_cooperateundemocratic ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  negimage_chinesecitizenbehavior.full.lm   <- felm(as.formula(paste0("negimage_chinesecitizenbehavior ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  negimage_resourceextraction.full.lm   <- felm(as.formula(paste0("negimage_resourceextraction ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  negimage_takingjobsbusiness.full.lm   <- felm(as.formula(paste0("negimage_takingjobsbusiness ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  negimage_landgrabbing.full.lm   <- felm(as.formula(paste0("negimage_landgrabbing ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  negimage_productquality.full.lm   <- felm(as.formula(paste0("negimage_productquality ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-  china_dontknow_index.full.lm   <- felm(as.formula(paste0("china_dontknow_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",              IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  # Full Models ----------------------------------------------------------------
+  ## Round 2-5
+  lib_dem_val_index.full.lm               <- felm(as.formula(paste0("lib_dem_val_index ~               completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 2:5),]) 
   
-  ## Restricted
-  lib_dem_val_index.restricted.lm <- felm(as.formula(paste0("lib_dem_val_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
-  china_influential_index.restricted.lm <- felm(as.formula(paste0("china_influential_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
-  china_positive_influence_index.restricted.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
-  formcolnpower.most.influence.restricted.lm <- felm(as.formula(paste0("formcolnpower.most.influence ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
-  formcolnpower.best.dev.model.restricted.lm <- felm(as.formula(paste0("formcolnpower.best.dev.model ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+  ## Round 4
+  china.help.country.full.lm              <- felm(as.formula(paste0("china.help.country ~              completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),]) 
+  usa.help.country.full.lm                <- felm(as.formula(paste0("usa.help.country ~                completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),]) 
   
-  ## Restricted - US/UK
-  lib_dem_val_index.restrictedusuk.lm <- felm(as.formula(paste0("lib_dem_val_index ~ completed_near_ukaid.",buffer,"km.bin + planned_near_ukaid.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ",               IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted_uk %in% T,]) 
+  ## Round 6
+  china_influential_index.full.lm         <- felm(as.formula(paste0("china_influential_index ~         completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  china_positive_influence_index.full.lm  <- felm(as.formula(paste0("china_positive_influence_index ~  completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  formcolnpower.most.influence.full.lm    <- felm(as.formula(paste0("formcolnpower.most.influence ~    completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  formcolnpower.best.dev.model.full.lm    <- felm(as.formula(paste0("formcolnpower.best.dev.model ~    completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  posimage_chinesepeople.full.lm          <- felm(as.formula(paste0("posimage_chinesepeople ~          completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  posimage_businessinvetment.full.lm      <- felm(as.formula(paste0("posimage_businessinvetment ~      completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  posimage_infordevinvetment.full.lm      <- felm(as.formula(paste0("posimage_infordevinvetment ~      completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  posimage_noninterference.full.lm        <- felm(as.formula(paste0("posimage_noninterference ~        completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  posimage_supportinintlaffiars.full.lm   <- felm(as.formula(paste0("posimage_supportinintlaffiars ~   completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  posimage_productcost.full.lm            <- felm(as.formula(paste0("posimage_productcost ~            completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  negimage_cooperateundemocratic.full.lm  <- felm(as.formula(paste0("negimage_cooperateundemocratic ~  completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  negimage_chinesecitizenbehavior.full.lm <- felm(as.formula(paste0("negimage_chinesecitizenbehavior ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  negimage_resourceextraction.full.lm     <- felm(as.formula(paste0("negimage_resourceextraction ~     completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  negimage_takingjobsbusiness.full.lm     <- felm(as.formula(paste0("negimage_takingjobsbusiness ~     completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  negimage_landgrabbing.full.lm           <- felm(as.formula(paste0("negimage_landgrabbing ~           completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  negimage_productquality.full.lm         <- felm(as.formula(paste0("negimage_productquality ~         completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+  china_dontknow_index.full.lm            <- felm(as.formula(paste0("china_dontknow_index ~            completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
   
+  # Restricted Models ----------------------------------------------------------
+  ## Round 2-5
+  lib_dem_val_index.restricted.lm              <- felm(as.formula(paste0("lib_dem_val_index ~              completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 2:5),]) 
+  
+  ## Round 6
+  china_influential_index.restricted.lm        <- felm(as.formula(paste0("china_influential_index ~        completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+  china_positive_influence_index.restricted.lm <- felm(as.formula(paste0("china_positive_influence_index ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+  formcolnpower.most.influence.restricted.lm   <- felm(as.formula(paste0("formcolnpower.most.influence ~   completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+  formcolnpower.best.dev.model.restricted.lm   <- felm(as.formula(paste0("formcolnpower.best.dev.model ~   completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_restricted %in% T,]) 
+  
+  # Restricted US/UK Models ----------------------------------------------------
+  ## Round 2-5
+  lib_dem_val_index.restrictedusuk.lm <- felm(as.formula(paste0("lib_dem_val_index ~ completed_near_ukaid.",buffer,"km.bin + planned_near_ukaid.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted_uk %in% T) & (df$afro.round %in% 2:5),]) 
+  
+  # Append Models --------------------------------------------------------------
   coef_full_df <- bind_rows(
     extract_coefs(lib_dem_val_index.full.lm) %>% mutate(model = "Liberal\ndemocratic\nvalues\n(index)"),
     extract_coefs(china_influential_index.full.lm) %>% mutate(model = "Believes\nChina is\ninfluencial\n(index)"),
@@ -57,7 +69,9 @@ df_results <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
     extract_coefs(negimage_takingjobsbusiness.full.lm) %>% mutate(model = "Negative Image:\nChinese\nfirms taking\nlocal jobs\nand businesses"),
     extract_coefs(negimage_landgrabbing.full.lm) %>% mutate(model = "Negative Image:\nChinese\nland\ngrabbing"),
     extract_coefs(negimage_productquality.full.lm) %>% mutate(model = "Negative Image:\nQuality of\nChinese\nproducts"),
-    extract_coefs(china_dontknow_index.full.lm) %>% mutate(model = "China Questions\nDon't Know Index")
+    extract_coefs(china_dontknow_index.full.lm) %>% mutate(model = "China Questions\nDon't Know Index"),
+    extract_coefs(china.help.country.full.lm) %>% mutate(model = "Believes China\nHelps Country"),
+    extract_coefs(usa.help.country.full.lm) %>% mutate(model = "Believes US\nHelps Country")
   ) %>%
     mutate(subset = "Full Sample") %>%
     mutate(buffer = buffer) %>%
@@ -91,6 +105,7 @@ df_results <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
 }) %>%
   bind_rows()
 
+# Cleanup Appended Results -----------------------------------------------------
 df_results <- df_results %>%
   mutate(var = var %>% 
            str_replace("completed_near_china.pl10.km.bin", 
@@ -140,7 +155,7 @@ p <- df_results %>%
          pch = guide_legend(reverse=T)) +
   scale_linetype_manual(values=c("solid","dashed","solid","dashed")) +
   scale_shape_manual(values=c(16,17,16,17)) +
-  scale_color_manual(values=c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")) +
+  scale_color_manual(values=figure_colors) +
   theme(legend.position="bottom") +
   scale_x_reverse() + 
   facet_wrap(~model,
@@ -176,7 +191,7 @@ p <- df_results %>%
          pch = guide_legend(reverse=T)) +
   scale_linetype_manual(values=c("solid","dashed","solid","dashed")) +
   scale_shape_manual(values=c(16,17,16,17)) +
-  scale_color_manual(values=c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")) +
+  scale_color_manual(values=figure_colors) +
   theme(legend.position="bottom") +
   scale_x_reverse() + 
   facet_wrap(~model,
@@ -212,7 +227,7 @@ p <- df_results %>%
          pch = guide_legend(reverse=T)) +
   scale_linetype_manual(values=c("solid","dashed","solid","dashed")) +
   scale_shape_manual(values=c(16,17,16,17)) +
-  scale_color_manual(values=c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")) +
+  scale_color_manual(values=figure_colors) +
   scale_x_reverse() 
 ggsave(p, filename = file.path(figures_file_path, "buf_sensitivity_restrictedusuk.png"),
        height = 6.5, width = 6)
