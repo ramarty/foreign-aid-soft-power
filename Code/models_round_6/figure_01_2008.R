@@ -64,7 +64,7 @@ stargazer(influential_index.full.lm,
             ),
             c("Spatial Lag of Dep Var Included", "N", "N", "N", "N", "N", "N"),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
-            c("Buffer",buffer,buffer,buffer,buffer)),
+            c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
           out=file.path(tables_file_path, "table_01_full_2008.tex"))
 
 # Restricted Table -------------------------------------------------------------

@@ -5,11 +5,11 @@ df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 # Regressions ------------------------------------------------------------------
 #### Full Sample
-china_dontknow_index.lm <- felm(as.formula(paste0("china_dontknow_index ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-china.influence.econ.activity_DONTKNOW.lm <- felm(as.formula(paste0("china.influence.econ.activity_DONTKNOW ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-china.econpol.influence.positive_DONTKNOW.lm <- felm(as.formula(paste0("china.econpol.influence.positive_DONTKNOW ~ china.econpol.influence.positive_DONTKNOW_splag + completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-china.aid.good.job.meet.country.needs_DONTKNOW.lm <- felm(as.formula(paste0("china.aid.good.job.meet.country.needs_DONTKNOW ~ completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
-china.help.country_DONTKNOW.lm <- felm(as.formula(paste0("china.help.country_DONTKNOW ~ china.help.country_DONTKNOW_splag + completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ",               IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china_dontknow_index.lm                           <- felm(as.formula(paste0("china_dontknow_index ~                                                                             completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china.influence.econ.activity_DONTKNOW.lm         <- felm(as.formula(paste0("china.influence.econ.activity_DONTKNOW ~                                                           completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china.econpol.influence.positive_DONTKNOW.lm      <- felm(as.formula(paste0("china.econpol.influence.positive_DONTKNOW ~      china.econpol.influence.positive_DONTKNOW_splag + completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china.aid.good.job.meet.country.needs_DONTKNOW.lm <- felm(as.formula(paste0("china.aid.good.job.meet.country.needs_DONTKNOW ~                                                   completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china.help.country_DONTKNOW.lm                    <- felm(as.formula(paste0("china.help.country_DONTKNOW ~                    china.help.country_DONTKNOW_splag +               completed_near_china.pl10.30km.bin + planned_near_china.pl10.30km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
 coef_df <- bind_rows(
   extract_coefs(china_dontknow_index.lm) %>%
@@ -54,7 +54,7 @@ coef_df %>%
                     "USA Aid Completed",
                     "USA Aid Planned")) %>%
   make_plot_all(height = 7,
-                width = 10,
+                width = 8,
                 file_name = "figure_07.png")
 
 # Full Table -------------------------------------------------------------------

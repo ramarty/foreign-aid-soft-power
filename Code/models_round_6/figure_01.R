@@ -95,7 +95,7 @@ coef_df <- coef_df %>%
 coef_df %>%
   filter(model %in% c("Believes\nChina is\ninfluencial\n(index)",
                       "Belives\nChinese presence\nis positive\n(index)")) %>%
-  make_plot_all(height = 6,
+  make_plot_all(height = 4,
                 width = 10,
                 file_name = "figure_01.png")
 
@@ -149,7 +149,7 @@ stargazer(influential_index.full.lm,
             ),
             c("Spatial Lag of Dep Var Included", "N", "N", "N", "N", "N", "N"),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
-            c("Buffer",buffer,buffer,buffer,buffer)),
+            c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
           out=file.path(tables_file_path, "table_01_full.tex"))
 
 # Restricted Table -------------------------------------------------------------

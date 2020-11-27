@@ -55,7 +55,8 @@ FEs <- "iso + afro.round" # "iso + afro.round"
 CLUSTER_VAR <- "location_id" # "location_id" # townvill
 
 # Figure Colors
-figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
+#figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
+figure_colors <- c("firebrick2", "darkorange","dodgerblue4","green4") # mediumseagreen
 
 # Run Scripts ------------------------------------------------------------------
 if(RUN_SCRIPTS){

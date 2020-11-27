@@ -7,7 +7,7 @@ df <- df %>%
   filter(afro.round %in% 4)
 
 # Regressions ------------------------------------------------------------------
-china.help.country.lm <- felm(as.formula(paste0("china.help.country ~ china.help.country_splag + completed_near_china.plNA.30km.bin + planned_near_china.plNA.30km.bin  + ",IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
+china.help.country.lm <- felm(as.formula(paste0("china.help.country ~ china.help.country_splag + completed_near_china.plNA.30km.bin + planned_near_china.plNA.30km.bin  + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 usa.help.country.lm   <- felm(as.formula(paste0("usa.help.country ~   usa.help.country_splag +   completed_near_china.plNA.30km.bin + planned_near_china.plNA.30km.bin  + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[df$sample_full %in% T,]) 
 
 # Full Table -------------------------------------------------------------------

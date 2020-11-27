@@ -59,7 +59,7 @@ coef_df %>%
                     "USA Aid Completed",
                     "USA Aid Planned")) %>%
   make_plot_all(height = 7,
-                width = 10,
+                width = 8,
                 file_name = "figure_05.png")
 
 # Full Table -------------------------------------------------------------------

@@ -97,7 +97,7 @@ coef_df <- coef_df %>%
 coef_df %>%
   filter(model == "Liberal\ndemocratic\nvalues\n(index)") %>%
   make_plot_all(height = 3,
-                width = 8,
+                width = 10,
                 file_name = "figure_02.png")
 
 # Figure - Components ----------------------------------------------------------
