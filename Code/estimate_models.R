@@ -4,7 +4,7 @@
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 # Regressions ------------------------------------------------------------------
-coefs_all_df <- lapply(seq(from = 5, to = 50, by = 30), function(buffer){
+coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
   
   print(paste(buffer, "------------------------------------------------------"))
   
