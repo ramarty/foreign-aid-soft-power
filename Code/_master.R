@@ -3,7 +3,7 @@
 
 # Mater R Script 
 
-RUN_SCRIPTS <- T
+RUN_SCRIPTS <- F
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
@@ -11,6 +11,7 @@ github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
 
 code_file_path    <- file.path(github_file_path, "Code")
 data_file_path    <- file.path(dropbox_file_path, "Data")
+results_file_path    <- file.path(dropbox_file_path, "Data_Results")
 outputs_file_path <- file.path(dropbox_file_path, "Outputs")
 tables_file_path  <- file.path(outputs_file_path, "tables")
 figures_file_path <- file.path(outputs_file_path, "figures")
@@ -25,11 +26,14 @@ library(stringr)
 library(ggplot2)
 library(ggthemes)
 library(hrbrthemes)
+library(tidyselect)
 library(labelled)
 #library(devtools)
 #install_github('mcooper/moranfast')
 library(moranfast)
 library(purrr)
+library(haven)
+library(ggpubr)
 
 source(file.path(code_file_path, "_functions.R"))
 
@@ -49,10 +53,11 @@ IVs_china_usaid <- c("age", "muslim", "urban", "male",
   paste(collapse = " + ")
 
 # Fixed effects
-FEs <- "iso + afro.round" # "iso + afro.round"
+# !!!! In 01_clean_data_for_replication, removed end changing location_id
+FEs <- "NAME_1 + afro.round" # "iso + afro.round",  uniqueea_afroround 
 
 # Cluster variables
-CLUSTER_VAR <- "location_id" # "location_id" # townvill
+CLUSTER_VAR <- "location_id" # "location_id" # townvill uniqueea_afroround
 
 # Figure Colors
 #figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
