@@ -3,6 +3,11 @@
 # Load Data --------------------------------------------------------------------
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
+#IVs_china
+#IVs_china_usaid
+#include_splag
+include_splag <- F
+
 # Regressions ------------------------------------------------------------------
 coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
   
@@ -14,27 +19,15 @@ coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
                    "blvs_mult_parties_create_choice",
                    "blvs_ctzn_should_join_any_cso",
                    "blvs_democ_best_system",
-                   "blvs_democ_best_system"), function(dv){
-                     print(dv)
-                     
-                     lm.full       <- felm(as.formula(paste0(dv, " ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) &       (df$afro.round %in% 2:5),]) 
-                     lm.restricted <- felm(as.formula(paste0(dv, " ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 2:5),]) 
-                     
-                     coefs <- bind_rows(
-                       lm.full       %>% extract_coefs() %>% mutate(subset = "full"),
-                       lm.restricted %>% extract_coefs() %>% mutate(subset = "restricted")
-                     ) %>%
-                       mutate(dv = all_of(dv),
-                              round = "2-5")
-                     
-                     out <- list()
-                     out[["coefs"]] <- coefs
-                     out[[paste(dv, buffer, "full", sep="_")]] <- lm.full
-                     out[[paste(dv, buffer, "restricted", sep="_")]] <- lm.restricted
-                     
-                     return(out)
-                     
-                   })
+                   "blvs_democ_best_system"),
+                 run_r2_5,
+                 df = df,
+                 include_splag = include_splag,
+                 IVs_china = IVs_china, 
+                 IVs_china_usaid = IVs_china_usaid, 
+                 FEs = FEs, 
+                 CLUSTER_VAR = CLUSTER_VAR,
+                 buffer = buffer)
   
   r2_5_coefs <- lapply(r2_5, function(l){
     l$coefs
@@ -50,24 +43,15 @@ coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
   
   # Rounds 4 Models ------------------------------------------------------------
   r4 <- lapply(c("china.help.country", 
-                 "usa.help.country"), function(dv){
-                   print(dv)
-                   
-                   lm.full <- felm(as.formula(paste0(dv, " ~              completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),]) 
-                   
-                   coefs <- lm.full %>% 
-                     extract_coefs() %>% 
-                     mutate(subset = "full",
-                            dv = all_of(dv),
-                            round = "4")
-                   
-                   out <- list()
-                   out[["coefs"]] <- coefs
-                   out[[paste(dv, buffer, "full", sep="_")]] <- lm.full
-                   
-                   return(out)
-                   
-                 })
+                 "usa.help.country",
+                 "china.help.country_DONTKNOW"),
+               run_r4,
+               df = df,
+               include_splag = include_splag,
+               IVs_china = IVs_china, 
+               FEs = FEs, 
+               CLUSTER_VAR = CLUSTER_VAR,
+               buffer = buffer)
   
   r4_coefs <- lapply(r4, function(l){
     l$coefs
@@ -82,10 +66,10 @@ coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
     do.call(what = "c")
   
   # Rounds 6 Models ------------------------------------------------------------
-  r6 <- lapply(c("china_influential_index",
+   r6 <- lapply(c("china_influential_index",
                  "china_positive_influence_index",
-                 "china.most.influence", 
-                 "usa.most.influence", 
+                 "china.most.influence",
+                 "usa.most.influence",
                  "china.best.dev.model",
                  "usa.best.dev.model",
                  "formcolnpower.most.influence",
@@ -102,27 +86,18 @@ coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
                  "negimage_takingjobsbusiness",
                  "negimage_landgrabbing",
                  "negimage_productquality",
-                 "china_dontknow_index"), function(dv){
-                   print(dv)
-                   
-                   lm.full       <- felm(as.formula(paste0(dv, " ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),]) 
-                   lm.restricted <- felm(as.formula(paste0(dv, " ~ completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),]) 
-                   
-                   coefs <- bind_rows(
-                     lm.full       %>% extract_coefs() %>% mutate(subset = "full"),
-                     lm.restricted %>% extract_coefs() %>% mutate(subset = "restricted")
-                   ) %>%
-                     mutate(dv = all_of(dv),
-                            round = "6")
-                   
-                   out <- list()
-                   out[["coefs"]] <- coefs
-                   out[[paste(dv, buffer, "full", sep="_")]] <- lm.full
-                   out[[paste(dv, buffer, "restricted", sep="_")]] <- lm.restricted
-                   
-                   return(out)
-                   
-                 })
+                 "china.influence.econ.activity_DONTKNOW",
+                 "china.econpol.influence.positive_DONTKNOW",
+                 "china.aid.good.job.meet.country.needs_DONTKNOW",
+                 "china_dontknow_index"),
+               run_r6,
+               df = df,
+               include_splag = include_splag,
+               IVs_china = IVs_china, 
+               IVs_china_usaid = IVs_china_usaid, 
+               FEs = FEs, 
+               CLUSTER_VAR = CLUSTER_VAR,
+               buffer = buffer)
   
   r6_coefs <- lapply(r6, function(l){
     l$coefs
@@ -142,24 +117,14 @@ coefs_all_df <- lapply(seq(from = 5, to = 50, by = 5), function(buffer){
                        "blvs_mult_parties_create_choice",
                        "blvs_ctzn_should_join_any_cso",
                        "blvs_democ_best_system",
-                       "blvs_elec_good"), function(dv){
-                         print(dv)
-                         
-                         lm.restricted.usuk <- felm(as.formula(paste0(dv, " ~               completed_near_ukaid.",buffer,"km.bin + planned_near_ukaid.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted_uk %in% T) & (df$afro.round %in% 2:5),]) 
-                         
-                         coefs <- lm.restricted.usuk %>% 
-                           extract_coefs() %>% 
-                           mutate(subset = "restrictedusuk",
-                                  dv = all_of(dv),
-                                  round = "2-5")
-                         
-                         out <- list()
-                         out[["coefs"]] <- coefs
-                         out[[paste(dv, buffer, "restrictedusuk", sep="_")]] <- lm.restricted.usuk
-                         
-                         return(out)
-                         
-                       })
+                       "blvs_elec_good"),
+                     run_r2_5_usuk,
+                     df = df,
+                     include_splag = include_splag,
+                     IVs_china_usaid = IVs_china_usaid, 
+                     FEs = FEs, 
+                     CLUSTER_VAR = CLUSTER_VAR,
+                     buffer = buffer)
   
   r2_5usuk_coefs <- lapply(r2_5usuk, function(l){
     l$coefs
@@ -210,7 +175,9 @@ coefs_all_df <- coefs_all_df %>%
            str_replace("completed_near_ukaid.km.bin", 
                        "UK Aid Completed") %>%
            str_replace("planned_near_ukaid.km.bin", 
-                       "UK Aid Planned")) %>%
+                       "UK Aid Planned") %>%
+           str_replace("planned_near_china.plNAcmpltd.km.bin", 
+                       "Chinese Aid Planned")) %>%
   filter(var %in% c("Chinese Aid Completed",
                     "Chinese Aid Planned",
                     "USA Aid Completed",
@@ -243,6 +210,10 @@ coefs_all_df$dv_clean[coefs_all_df$dv %in% "negimage_takingjobsbusiness"] <- "Ne
 coefs_all_df$dv_clean[coefs_all_df$dv %in% "negimage_landgrabbing"] <- "Negative Image:\nChinese\nland\ngrabbing"
 coefs_all_df$dv_clean[coefs_all_df$dv %in% "negimage_productquality"] <- "Negative Image:\nQuality of\nChinese\nproducts"
 coefs_all_df$dv_clean[coefs_all_df$dv %in% "china_dontknow_index"] <- "China Questions\nDon't Know Index"
+coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.influence.econ.activity_DONTKNOW"] <- "How much influence does\nChina economic activities\nhave on economy [Don't Know]"
+coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.econpol.influence.positive_DONTKNOW"] <- "China has positive or\nnegative economic and\npolitical influence [Don't Know]"
+coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.aid.good.job.meet.country.needs_DONTKNOW"] <- "Chinese aid does good or\nbad job to meet\ncountry's needs [Don't Know]"
+coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.help.country_DONTKNOW"] <- "How much does China\nhelp the country [Don't Know]"
 coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.help.country"] <- "Believes China\nHelps Country"
 coefs_all_df$dv_clean[coefs_all_df$dv %in% "usa.help.country"] <- "Believes US\nHelps Country"
 coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.most.influence"] <- "Believes\nChinese model\nis most\ninfluential"

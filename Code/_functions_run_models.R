@@ -1,0 +1,165 @@
+run_r2_5 <- function(dv, 
+                     df,
+                     include_splag,
+                     IVs_china, 
+                     IVs_china_usaid, 
+                     FEs, 
+                     CLUSTER_VAR,
+                     buffer){
+  
+  print(dv)
+  
+  if(include_splag %in% T){
+    dv_splag <- paste0(dv, "_splag")
+  } else{
+    dv_splag <- "" 
+  }
+  
+  lm.full       <- felm(as.formula(paste0(dv, "  ~ ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNA.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) &       (df$afro.round %in% 2:5),]) 
+  lm.restricted <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNA.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 2:5),]) 
+  
+  lm.full.plcmpltd       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNAcmpltd.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) &       (df$afro.round %in% 2:5),]) 
+  lm.restricted.plcmpltd <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNAcmpltd.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 2:5),]) 
+  
+  coefs <- bind_rows(
+    lm.full       %>% extract_coefs() %>% mutate(subset = "full", plcompltd = F),
+    lm.restricted %>% extract_coefs() %>% mutate(subset = "restricted", plcompltd = F),
+    lm.full.plcmpltd       %>% extract_coefs() %>% mutate(subset = "full", plcompltd = T),
+    lm.restricted.plcmpltd %>% extract_coefs() %>% mutate(subset = "restricted", plcompltd = T)
+  ) %>%
+    mutate(dv = all_of(dv),
+           round = "2-5")
+  
+  out <- list()
+  out[["coefs"]] <- coefs
+  out[[paste(dv, "full", sep="_")]] <- lm.full
+  out[[paste(dv, "restricted", sep="_")]] <- lm.restricted
+  out[[paste(dv, "full", "plcmpltd", sep="_")]] <- lm.full.plcmpltd
+  out[[paste(dv, "restricted", "plcmpltd", sep="_")]] <- lm.restricted.plcmpltd
+  
+  return(out)
+  
+}
+
+run_r2_5_usuk <- function(dv, 
+                         df,
+                         include_splag,
+                         IVs_china_usaid, 
+                         FEs, 
+                         CLUSTER_VAR,
+                         buffer){
+  
+  print(dv)
+  
+  if(include_splag %in% T){
+    dv_splag <- paste0(dv, "_splag")
+  } else{
+    dv_splag <- "" 
+  }
+  
+  lm.restricted.usuk <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_ukaid.",buffer,"km.bin + planned_near_ukaid.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted_uk %in% T) & (df$afro.round %in% 2:5),]) 
+  
+  coefs <- lm.restricted.usuk %>% 
+    extract_coefs() %>% 
+    mutate(subset = "restrictedusuk",
+           dv = all_of(dv),
+           round = "2-5")
+  
+  out <- list()
+  out[["coefs"]] <- coefs
+  out[[paste(dv, "restrictedusuk", sep="_")]] <- lm.restricted.usuk
+  
+  return(out)
+  
+}
+
+run_r4 <- function(dv,
+                   df,
+                   include_splag,
+                   IVs_china, 
+                   FEs, 
+                   CLUSTER_VAR,
+                   buffer){
+  print(dv)
+  
+  if(include_splag %in% T){
+    dv_splag <- paste0(dv, "_splag")
+  } else{
+    dv_splag <- "" 
+  }
+  
+  lm.full <- felm(as.formula(paste0(dv, " ~  ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNA.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),]) 
+  lm.full.plcmpltd <- felm(as.formula(paste0(dv, " ~  ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNAcmpltd.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),]) 
+
+  coefs <- bind_rows(
+    lm.full %>% 
+      extract_coefs() %>% mutate(plcompltd = F),
+    lm.full.plcmpltd %>% 
+      extract_coefs() %>% mutate(plcompltd = T)
+  ) %>%
+    mutate(subset = "full",
+           dv = all_of(dv),
+           round = "4")
+  
+  out <- list()
+  out[["coefs"]] <- coefs
+  out[[paste(dv, "full", sep="_")]] <- lm.full
+  out[[paste(dv, "full", "plcmpltd", sep="_")]] <- lm.full.plcmpltd
+  
+  return(out)
+  
+}
+
+run_r6 <- function(dv, 
+                   df,
+                   include_splag,
+                   IVs_china, 
+                   IVs_china_usaid, 
+                   FEs, 
+                   CLUSTER_VAR,
+                   buffer){
+  
+  print(dv)
+  
+  if(include_splag %in% T){
+    dv_splag <- paste0(dv, "_splag")
+  } else{
+    dv_splag <- "" 
+  }
+  
+  ## Planned - 2010
+  lm.full.2010       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),]) 
+  lm.restricted.2010 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),]) 
+  
+  # ## Planned - 2009
+  # lm.full.2009       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl09.",buffer,"km.bin + planned_near_china.pl09.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),]) 
+  # lm.restricted.2009 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl09.",buffer,"km.bin + planned_near_china.pl09.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),]) 
+  # 
+  # ## Planned - 2008
+  # lm.full.2008       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),]) 
+  # lm.restricted.2008 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),]) 
+  # 
+  coefs <- bind_rows(
+    lm.full.2010       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2010),
+    lm.restricted.2010 %>% extract_coefs() %>% mutate(subset = "restricted", planned_year = 2010)
+    # lm.full.2009       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2009),
+    # lm.restricted.2009 %>% extract_coefs() %>% mutate(subset = "restricted", planned_year = 2009),
+    # lm.full.2008       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2008),
+    # lm.restricted.2008 %>% extract_coefs() %>% mutate(subset = "restricted", planned_year = 2008)
+  ) %>%
+    mutate(dv = all_of(dv),
+           round = "6")
+  
+  out <- list()
+  out[["coefs"]] <- coefs
+  out[[paste(dv, "full", sep="_")]] <- lm.full.2010
+  out[[paste(dv, "restricted", sep="_")]] <- lm.restricted.2010
+  # out[[paste(dv, "2009", "full", sep="_")]] <- lm.full.2009
+  # out[[paste(dv, "2009", "restricted", sep="_")]] <- lm.restricted.2009
+  # out[[paste(dv, "2008", "full", sep="_")]] <- lm.full.2008
+  # out[[paste(dv, "2008", "restricted", sep="_")]] <- lm.restricted.2008
+  
+  return(out)
+  
+}
+
