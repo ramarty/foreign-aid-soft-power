@@ -36,6 +36,7 @@ library(haven)
 library(ggpubr)
 
 source(file.path(code_file_path, "_functions.R"))
+source(file.path(code_file_path, "_functions_run_models.R"))
 
 # Parameters -------------------------------------------------------------------
 
