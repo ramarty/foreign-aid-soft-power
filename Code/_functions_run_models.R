@@ -30,24 +30,24 @@ run_r2_5 <- function(dv,
     mutate(dv = all_of(dv),
            round = "2-5")
   
-  out <- list()
-  out[["coefs"]] <- coefs
-  out[[paste(dv, "full", sep="_")]] <- lm.full
-  out[[paste(dv, "restricted", sep="_")]] <- lm.restricted
-  out[[paste(dv, "full", "plcmpltd", sep="_")]] <- lm.full.plcmpltd
-  out[[paste(dv, "restricted", "plcmpltd", sep="_")]] <- lm.restricted.plcmpltd
+  if(buffer %in% 30){
+    saveRDS(lm.full, file.path(results_file_path,       paste0(dv, "_full", ".Rds")))
+    saveRDS(lm.restricted, file.path(results_file_path, paste0(dv, "_restricted", ".Rds")))
+    saveRDS(lm.full, file.path(results_file_path,       paste0(dv, "_full", "_plcmpltd", ".Rds")))
+    saveRDS(lm.restricted, file.path(results_file_path, paste0(dv, "_restricted", "_plcmpltd", ".Rds")))
+  }
   
-  return(out)
+  return(coefs)
   
 }
 
 run_r2_5_usuk <- function(dv, 
-                         df,
-                         include_splag,
-                         IVs_china_usaid, 
-                         FEs, 
-                         CLUSTER_VAR,
-                         buffer){
+                          df,
+                          include_splag,
+                          IVs_china_usaid, 
+                          FEs, 
+                          CLUSTER_VAR,
+                          buffer){
   
   print(dv)
   
@@ -65,11 +65,11 @@ run_r2_5_usuk <- function(dv,
            dv = all_of(dv),
            round = "2-5")
   
-  out <- list()
-  out[["coefs"]] <- coefs
-  out[[paste(dv, "restrictedusuk", sep="_")]] <- lm.restricted.usuk
+  if(buffer %in% 30){
+    saveRDS(lm.restricted.usuk, file.path(results_file_path, paste0(dv, "_restrictedusuk", ".Rds")))
+  }
   
-  return(out)
+  return(coefs)
   
 }
 
@@ -90,7 +90,7 @@ run_r4 <- function(dv,
   
   lm.full <- felm(as.formula(paste0(dv, " ~  ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNA.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),], keepModel = F) 
   lm.full.plcmpltd <- felm(as.formula(paste0(dv, " ~  ",dv_splag," completed_near_china.plNA.",buffer,"km.bin + planned_near_china.plNAcmpltd.",buffer,"km.bin + ", IVs_china," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T) & (df$afro.round %in% 4),], keepModel = F) 
-
+  
   coefs <- bind_rows(
     lm.full %>% 
       extract_coefs() %>% mutate(plcompltd = F),
@@ -101,12 +101,12 @@ run_r4 <- function(dv,
            dv = all_of(dv),
            round = "4")
   
-  out <- list()
-  out[["coefs"]] <- coefs
-  out[[paste(dv, "full", sep="_")]] <- lm.full
-  out[[paste(dv, "full", "plcmpltd", sep="_")]] <- lm.full.plcmpltd
+  if(buffer %in% 30){
+    saveRDS(lm.full, file.path(results_file_path, paste0(dv, "_full", ".Rds")))
+    saveRDS(lm.full.plcmpltd, file.path(results_file_path, paste0(dv, "_full", "_plcmpltd", ".Rds")))
+  }
   
-  return(out)
+  return(coefs)
   
 }
 
@@ -150,16 +150,14 @@ run_r6 <- function(dv,
     mutate(dv = all_of(dv),
            round = "6")
   
-  out <- list()
-  out[["coefs"]] <- coefs
-  out[[paste(dv, "full", sep="_")]] <- lm.full.2010
-  if(!grepl("^negimage|^posimage", dv)) out[[paste(dv, "restricted", sep="_")]] <- lm.restricted.2010
-  # out[[paste(dv, "2009", "full", sep="_")]] <- lm.full.2009
-  # out[[paste(dv, "2009", "restricted", sep="_")]] <- lm.restricted.2009
-  # out[[paste(dv, "2008", "full", sep="_")]] <- lm.full.2008
-  # out[[paste(dv, "2008", "restricted", sep="_")]] <- lm.restricted.2008
+  if(buffer %in% 30){
+    saveRDS(lm.full.2010, file.path(results_file_path, paste0(dv, "_full", ".Rds")))
+    if(!grepl("^negimage|^posimage", dv)){
+      saveRDS(lm.restricted.2010, file.path(results_file_path, paste0(dv, "_restricted", ".Rds")))
+    } 
+  }
   
-  return(out)
+  return(coefs)
   
 }
 

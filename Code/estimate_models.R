@@ -15,7 +15,7 @@ coefs_all_df <- lapply(30, function(buffer){
   print(paste(buffer, "------------------------------------------------------"))
   
   # Rounds 2-5 Models ----------------------------------------------------------
-  r2_5 <- lapply(c("lib_dem_val_index",
+  r2_5_coefs <- lapply(c("lib_dem_val_index",
                    "blvs_mult_parties_good",
                    "blvs_mult_parties_create_choice",
                    "blvs_ctzn_should_join_any_cso",
@@ -28,26 +28,11 @@ coefs_all_df <- lapply(30, function(buffer){
                  IVs_china_usaid = IVs_china_usaid, 
                  FEs = FEs, 
                  CLUSTER_VAR = CLUSTER_VAR,
-                 buffer = buffer)
-  
-  r2_5_coefs <- lapply(r2_5, function(l){
-    l$coefs
-  }) %>%
+                 buffer = buffer) %>%
     bind_rows()
   
-  if(buffer %in% 30){
-    r2_5_models <- lapply(r2_5, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r2_5_models, file.path(results_file_path, paste0("models_r2_5_",buffer,"km.Rds")), compress = TRUE)
-  }
-  
   # Rounds 4 Models ------------------------------------------------------------
-  r4 <- lapply(c("china.help.country", 
+  r4_coefs <- lapply(c("china.help.country", 
                  "usa.help.country",
                  "china.help.country_DONTKNOW"),
                run_r4,
@@ -56,124 +41,31 @@ coefs_all_df <- lapply(30, function(buffer){
                IVs_china = IVs_china, 
                FEs = FEs, 
                CLUSTER_VAR = CLUSTER_VAR,
-               buffer = buffer)
-  
-  r4_coefs <- lapply(r4, function(l){
-    l$coefs
-  }) %>%
+               buffer = buffer) %>%
     bind_rows()
   
-  if(buffer %in% 30){
-    r4_models <- lapply(r4, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r4_models, file.path(results_file_path, paste0("models_r4_",buffer,"km.Rds")), compress = TRUE)
-  }
-  
   # Rounds 6 Models ------------------------------------------------------------
-  r6 <- lapply(c("china_influential_index",
+  r6_coefs <- lapply(c("china_influential_index",
                  "china_positive_influence_index",
                  "china.most.influence",
                  "usa.most.influence",
                  "china.best.dev.model",
                  "usa.best.dev.model",
                  "formcolnpower.most.influence",
-                 "formcolnpower.best.dev.model"),
-               run_r6,
-               df = df,
-               include_splag = include_splag,
-               IVs_china = IVs_china, 
-               IVs_china_usaid = IVs_china_usaid, 
-               FEs = FEs, 
-               CLUSTER_VAR = CLUSTER_VAR,
-               buffer = buffer)
-  
-  r6_coefs <- lapply(r6, function(l){
-    l$coefs
-  }) %>%
-    bind_rows()
-  
-  if(buffer %in% 30){
-    r6_models <- lapply(r6, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r6_models, file.path(results_file_path, paste0("models_r6_",buffer,"km_influence.Rds")), compress = TRUE)
-  }
-  
-  # Rounds 6 Models ------------------------------------------------------------
-  r6 <- lapply(c("posimage_chinesepeople",
+                 "formcolnpower.best.dev.model",
+                 "posimage_chinesepeople",
                  "posimage_businessinvetment",
                  "posimage_infordevinvetment",
                  "posimage_noninterference",
                  "posimage_supportinintlaffiars",
-                 "posimage_productcost"),
-               run_r6,
-               df = df,
-               include_splag = include_splag,
-               IVs_china = IVs_china, 
-               IVs_china_usaid = IVs_china_usaid, 
-               FEs = FEs, 
-               CLUSTER_VAR = CLUSTER_VAR,
-               buffer = buffer)
-  
-  r6_coefs <- lapply(r6, function(l){
-    l$coefs
-  }) %>%
-    bind_rows()
-  
-  if(buffer %in% 30){
-    r6_models <- lapply(r6, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r6_models, file.path(results_file_path, paste0("models_r6_",buffer,"km_posimage.Rds")), compress = TRUE)
-  }
-  
-  # Rounds 6 Models ------------------------------------------------------------
-  r6 <- lapply(c("negimage_cooperateundemocratic",
+                 "posimage_productcost",
+                 "negimage_cooperateundemocratic",
                  "negimage_chinesecitizenbehavior",
                  "negimage_resourceextraction",
                  "negimage_takingjobsbusiness",
                  "negimage_landgrabbing",
-                 "negimage_productquality"),
-               run_r6,
-               df = df,
-               include_splag = include_splag,
-               IVs_china = IVs_china, 
-               IVs_china_usaid = IVs_china_usaid, 
-               FEs = FEs, 
-               CLUSTER_VAR = CLUSTER_VAR,
-               buffer = buffer)
-  
-  r6_coefs <- lapply(r6, function(l){
-    l$coefs
-  }) %>%
-    bind_rows()
-  
-  if(buffer %in% 30){
-    r6_models <- lapply(r6, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r6_models, file.path(results_file_path, paste0("models_r6_",buffer,"km_negimage.Rds")), compress = TRUE)
-  }
-  
-  # Rounds 6 Models ------------------------------------------------------------
-  r6 <- lapply(c("china.influence.econ.activity_DONTKNOW",
+                 "negimage_productquality",
+                 "china.influence.econ.activity_DONTKNOW",
                  "china.econpol.influence.positive_DONTKNOW",
                  "china.aid.good.job.meet.country.needs_DONTKNOW",
                  "china_dontknow_index"),
@@ -184,26 +76,11 @@ coefs_all_df <- lapply(30, function(buffer){
                IVs_china_usaid = IVs_china_usaid, 
                FEs = FEs, 
                CLUSTER_VAR = CLUSTER_VAR,
-               buffer = buffer)
-  
-  r6_coefs <- lapply(r6, function(l){
-    l$coefs
-  }) %>%
+               buffer = buffer) %>%
     bind_rows()
   
-  if(buffer %in% 30){
-    r6_models <- lapply(r6, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r6_models, file.path(results_file_path, paste0("models_r6_",buffer,"km_dk.Rds")), compress = TRUE)
-  }
-  
   # Rounds 2-5: US/UK Models ---------------------------------------------------
-  r2_5usuk <- lapply(c("lib_dem_val_index", 
+  r2_5usuk_coefs <- lapply(c("lib_dem_val_index", 
                        "blvs_mult_parties_good",
                        "blvs_mult_parties_create_choice",
                        "blvs_ctzn_should_join_any_cso",
@@ -215,23 +92,8 @@ coefs_all_df <- lapply(30, function(buffer){
                      IVs_china_usaid = IVs_china_usaid, 
                      FEs = FEs, 
                      CLUSTER_VAR = CLUSTER_VAR,
-                     buffer = buffer)
-  
-  r2_5usuk_coefs <- lapply(r2_5usuk, function(l){
-    l$coefs
-  }) %>%
+                     buffer = buffer) %>%
     bind_rows()
-  
-  if(buffer %in% 30){
-    r2_5usuk_models <- lapply(r2_5usuk, function(l){
-      l_model <- l
-      l_model$coefs <- NULL
-      l_model
-    }) %>%
-      do.call(what = "c")
-    
-    saveRDS(r2_5usuk_models, file.path(results_file_path, paste0("models_r2_5usuk_",buffer,"km.Rds")), compress = TRUE)
-  }
   
   # Append All Together --------------------------------------------------------
   coefs_all <- bind_rows(
@@ -242,15 +104,6 @@ coefs_all_df <- lapply(30, function(buffer){
   ) 
   coefs_all$var <- coefs_all$var %>% str_replace_all(paste0(buffer, "km"), "km")
   coefs_all$buffer <- buffer
-  
-  #models_all <- c(
-  #  r2_5usuk_models,
-  #  r6_models, 
-  #  r4_models, 
-  #  r2_5_models
-  #)
-  
-  #saveRDS(models_all, file.path(results_file_path, paste0("models_",buffer,"km.Rds")))
   
   return(coefs_all)
 }) %>%
