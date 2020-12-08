@@ -4,6 +4,7 @@
 # Mater R Script 
 
 RUN_SCRIPTS <- F
+save_model <- F
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 

@@ -30,7 +30,7 @@ run_r2_5 <- function(dv,
     mutate(dv = all_of(dv),
            round = "2-5")
   
-  if(buffer %in% 30){
+  if(buffer %in% 30 & save_model){
     saveRDS(lm.full, file.path(results_file_path,       paste0(dv, "_full", ".Rds")))
     saveRDS(lm.restricted, file.path(results_file_path, paste0(dv, "_restricted", ".Rds")))
     saveRDS(lm.full, file.path(results_file_path,       paste0(dv, "_full", "_plcmpltd", ".Rds")))
@@ -65,7 +65,7 @@ run_r2_5_usuk <- function(dv,
            dv = all_of(dv),
            round = "2-5")
   
-  if(buffer %in% 30){
+  if(buffer %in% 30 & save_model){
     saveRDS(lm.restricted.usuk, file.path(results_file_path, paste0(dv, "_restrictedusuk", ".Rds")))
   }
   
@@ -101,7 +101,7 @@ run_r4 <- function(dv,
            dv = all_of(dv),
            round = "4")
   
-  if(buffer %in% 30){
+  if(buffer %in% 30 & save_model){
     saveRDS(lm.full, file.path(results_file_path, paste0(dv, "_full", ".Rds")))
     saveRDS(lm.full.plcmpltd, file.path(results_file_path, paste0(dv, "_full", "_plcmpltd", ".Rds")))
   }
@@ -131,14 +131,6 @@ run_r6 <- function(dv,
   lm.full.2010       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),], keepModel = F) 
   lm.restricted.2010 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl10.",buffer,"km.bin + planned_near_china.pl10.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),], keepModel = F) 
   
-  # ## Planned - 2009
-  # lm.full.2009       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl09.",buffer,"km.bin + planned_near_china.pl09.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),]) 
-  # lm.restricted.2009 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl09.",buffer,"km.bin + planned_near_china.pl09.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),]) 
-  # 
-  # ## Planned - 2008
-  # lm.full.2008       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),]) 
-  # lm.restricted.2008 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),]) 
-  # 
   coefs <- bind_rows(
     lm.full.2010       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2010),
     lm.restricted.2010 %>% extract_coefs() %>% mutate(subset = "restricted", planned_year = 2010)
@@ -150,10 +142,23 @@ run_r6 <- function(dv,
     mutate(dv = all_of(dv),
            round = "6")
   
-  if(buffer %in% 30){
+  if(buffer %in% 30 & save_model){
+    ## Planned - 2009
+    lm.full.2009       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl09.",buffer,"km.bin + planned_near_china.pl09.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),])
+    lm.restricted.2009 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl09.",buffer,"km.bin + planned_near_china.pl09.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),])
+    
+    ## Planned - 2008
+    lm.full.2008       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),])
+    lm.restricted.2008 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),])
+
     saveRDS(lm.full.2010, file.path(results_file_path, paste0(dv, "_full", ".Rds")))
+    saveRDS(lm.full.2009, file.path(results_file_path, paste0(dv, "_full_2009", ".Rds")))
+    saveRDS(lm.full.2008, file.path(results_file_path, paste0(dv, "_full_2008", ".Rds")))
+    
     if(!grepl("^negimage|^posimage", dv)){
       saveRDS(lm.restricted.2010, file.path(results_file_path, paste0(dv, "_restricted", ".Rds")))
+      saveRDS(lm.restricted.2009, file.path(results_file_path, paste0(dv, "_restricted_2009", ".Rds")))
+      saveRDS(lm.restricted.2008, file.path(results_file_path, paste0(dv, "_restricted_2008", ".Rds")))
     } 
   }
   
