@@ -7,6 +7,8 @@ splag <- "F"
 
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
+# ROUND 6 MODELS ===============================================================
+
 # Load all models
 for(model_path in list.files(results_file_path)){
   model_name <- model_path %>% str_replace_all(".Rds", "")
@@ -16,9 +18,6 @@ for(model_path in list.files(results_file_path)){
   assign(model_name, model)
   rm(model_name, model)
 }
-
-
-# ROUND 6 MODELS ===============================================================
 
 # Table 1 - 2010: Full ----------------------------------------------------------------
 stargazer(influential_index_full,

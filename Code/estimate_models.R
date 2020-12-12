@@ -10,6 +10,10 @@ include_splag <- F
 
 for(model_type in 1:3){
   
+  results_file_path <- file.path(dropbox_file_path, 
+                                 paste0("models_type_", model_type),
+                                 "models")
+  
   ## Main Models
   if(model_type %in% 1){
     include_splag <- F
@@ -17,6 +21,8 @@ for(model_type in 1:3){
     IVs_china_usaid_r2_5 <- IVs_china_usaid
     IVs_china_r6         <- IVs_china
     IVs_china_usaid_r6   <- IVs_china_usaid
+    
+    FEs <- "iso + afro.round"
   }
   
   ## Include splag
@@ -26,6 +32,8 @@ for(model_type in 1:3){
     IVs_china_usaid_r2_5 <- IVs_china_usaid
     IVs_china_r6         <- IVs_china
     IVs_china_usaid_r6   <- IVs_china_usaid
+    
+    FEs <- "iso + afro.round"
   }
   
   ## Different covariates
@@ -39,6 +47,19 @@ for(model_type in 1:3){
     IVs_china_usaid_r2_5 <- paste(IVs_china_usaid, r2_5_ivs)
     IVs_china_r6         <- paste(IVs_china,       r6_ivs)
     IVs_china_usaid_r6   <- paste(IVs_china_usaid, r6_ivs)
+    
+    FEs <- "iso + afro.round"
+  }
+  
+  ## Main Models
+  if(model_type %in% 4){
+    include_splag <- F
+    IVs_china_r2_5       <- IVs_china
+    IVs_china_usaid_r2_5 <- IVs_china_usaid
+    IVs_china_r6         <- IVs_china
+    IVs_china_usaid_r6   <- IVs_china_usaid
+    
+    FEs <- "NAME_1 + afro.round"
   }
   
   # Regressions ------------------------------------------------------------------
@@ -65,9 +86,9 @@ for(model_type in 1:3){
       bind_rows()
     
     # Rounds 4 Models ------------------------------------------------------------
+    # "china.help.country_DONTKNOW"
     r4_coefs <- lapply(c("china.help.country", 
-                         "usa.help.country",
-                         "china.help.country_DONTKNOW"),
+                         "usa.help.country"),
                        run_r4,
                        df = df,
                        include_splag = include_splag,
@@ -149,6 +170,10 @@ for(model_type in 1:3){
                          "Chinese Aid Completed") %>%
              str_replace("planned_near_china.pl10.km.bin", 
                          "Chinese Aid Planned") %>%
+             str_replace("completed_near_china.plNA.km.bin", 
+                         "Chinese Aid Completed") %>%
+             str_replace("planned_near_china.plNA.km.bin", 
+                         "Chinese Aid Planned") %>%
              str_replace("completed_near_usaid.km.bin", 
                          "USA Aid Completed") %>%
              str_replace("planned_near_usaid.km.bin", 
@@ -181,7 +206,7 @@ for(model_type in 1:3){
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_chinesepeople"] <- "Positive Image:\nChinese\npeople and\nculture"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_businessinvetment"] <- "Positive Image:\nChinese\nbusiness\ninvestment"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_infordevinvetment"] <- "Positive Image:\nChinese\ninfrastructure\ninvestment"
-  coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_noninterference"] <- "Positive Image:\nChinese\npolice of non-interference"
+  coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_noninterference"] <- "Positive Image:\nChinese\npolice of\nnon-interference"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_supportinintlaffiars"] <- "Positive Image:\nChinese\nsupport in\ninternational\naffairs"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "posimage_productcost"] <- "Positive Image:\nCost of\nChinese\nproducts"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "negimage_cooperateundemocratic"] <- "Negative Image:\nChinese\ncooperation\nw/ undemocratic\nleaders"
@@ -191,10 +216,10 @@ for(model_type in 1:3){
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "negimage_landgrabbing"] <- "Negative Image:\nChinese\nland\ngrabbing"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "negimage_productquality"] <- "Negative Image:\nQuality of\nChinese\nproducts"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "china_dontknow_index"] <- "China Questions\nDon't Know Index"
-  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.influence.econ.activity_DONTKNOW"] <- "How much influence does\nChina economic activities\nhave on economy [Don't Know]"
-  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.econpol.influence.positive_DONTKNOW"] <- "China has positive or\nnegative economic and\npolitical influence [Don't Know]"
-  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.aid.good.job.meet.country.needs_DONTKNOW"] <- "Chinese aid does good or\nbad job to meet\ncountry's needs [Don't Know]"
-  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.help.country_DONTKNOW"] <- "How much does China\nhelp the country [Don't Know]"
+  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.influence.econ.activity_DONTKNOW"] <- "How much influence\ndoes China economic\nactivities have\non economy\n[Don't Know]"
+  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.econpol.influence.positive_DONTKNOW"] <- "China has positive\nor negative economic\nand political influence\n[Don't Know]"
+  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.aid.good.job.meet.country.needs_DONTKNOW"] <- "Chinese aid does\ngood or bad job\nto meet country's needs\n[Don't Know]"
+  coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.help.country_DONTKNOW"] <- "How much does\nChina help\nthe country\n[Don't Know]"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.help.country"] <- "Believes China\nHelps Country"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "usa.help.country"] <- "Believes US\nHelps Country"
   coefs_all_df$dv_clean[coefs_all_df$dv %in% "china.most.influence"] <- "Believes\nChinese model\nis most\ninfluential"
@@ -208,5 +233,15 @@ for(model_type in 1:3){
   coefs_all_df$subset_clean[coefs_all_df$subset %in% c("restricted", "restrictedusuk")] <- "Restricted Sample"
   
   # Export -----------------------------------------------------------------------
-  saveRDS(coefs_all_df,    file.path(results_file_path, paste0("coefficients_model_type_",model_type,".Rds")))
+  saveRDS(coefs_all_df,    
+          file.path(dropbox_file_path, 
+                    paste0("models_type_", model_type),
+                    "coefficients",
+                    "coefficients.Rds"))
+  
+  write.csv(coefs_all_df,    
+          file.path(dropbox_file_path, 
+                    paste0("models_type_", model_type),
+                    "coefficients",
+                    "coefficients.csv"), row.names = F)
 }
