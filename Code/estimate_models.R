@@ -8,7 +8,7 @@ df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 #include_splag
 include_splag <- F
 
-for(model_type in 1:3){
+for(model_type in 1:4){
   
   results_file_path <- file.path(dropbox_file_path, 
                                  paste0("models_type_", model_type),
@@ -245,3 +245,5 @@ for(model_type in 1:3){
                     "coefficients",
                     "coefficients.csv"), row.names = F)
 }
+
+

@@ -13,9 +13,9 @@ github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
 code_file_path    <- file.path(github_file_path, "Code")
 data_file_path    <- file.path(dropbox_file_path, "Data")
 #results_file_path    <- file.path(dropbox_file_path, "Data_Results")
-outputs_file_path <- file.path(dropbox_file_path, "Outputs")
-tables_file_path  <- file.path(outputs_file_path, "tables")
-figures_file_path <- file.path(outputs_file_path, "figures")
+tables_file_path  <- file.path(dropbox_file_path, "models_type_1", "tables")
+figures_file_path <- file.path(dropbox_file_path, "models_type_1", "figures")
+#outputs_file_path <- file.path(dropbox_file_path, "Outputs")
 
 # Packages ---------------------------------------------------------------------
 library(dplyr)
@@ -78,31 +78,10 @@ if(RUN_SCRIPTS){
   source(file.path(sum_stat_file_path, "table_a9.R"))
   source(file.path(sum_stat_file_path, "indep_var_sum_stat.R"))
   
-  ## Models: Rounds 6
-  models_r6_file_path <- file.path(code_file_path, "models_round_6")
-  source(file.path(models_r6_file_path, "figure_01.R"))
-  source(file.path(models_r6_file_path, "figure_01_2009.R"))
-  source(file.path(models_r6_file_path, "figure_01_2008.R"))
-  source(file.path(models_r6_file_path, "figure_01_infrastructure.R"))
-  source(file.path(models_r6_file_path, "figure_03.R"))
-  source(file.path(models_r6_file_path, "figure_05.R"))
-  source(file.path(models_r6_file_path, "figure_06.R"))
-  source(file.path(models_r6_file_path, "figure_07.R"))
-
-  ## Models: Round 2-5
-  models_r2_5_file_path <- file.path(code_file_path, "models_rounds_2-5")
-  source(file.path(models_r2_5_file_path, "figure_02.R"))
-  source(file.path(models_r2_5_file_path, "figure_04.R"))
-  source(file.path(models_r2_5_file_path, "figure_02_plannedCompleted.R"))
-  
-  ## Models: Round 4
-  models_r4_file_path <- file.path(code_file_path, "models_round_4")
-  source(file.path(models_r4_file_path, "round_4_models.R"))
-  
-  ## Buffer Sensitivity Analysis
-  buffer_sensitivity_file_path <- file.path(code_file_path, "buffer_sensitivity")
-  source(file.path(buffer_sensitivity_file_path, "buffer_sensitivity.R"))
-  
+  ## Models
+  source(file.path(code_file_path, "estimate_models.R"))
+  source(file.path(code_file_path, "make_figure.R"))
+  source(file.path(code_file_path, "make_tables.R"))
 }
 
 
