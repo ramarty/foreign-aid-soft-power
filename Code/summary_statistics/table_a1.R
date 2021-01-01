@@ -1,65 +1,62 @@
-# Foreign Aid and State Legitimacy in Africa: Cross-National and Sub-National 
-# Evidence from Surveys, Survey Experiments, and Behavioral Games
-
-# Table A.11: Comparison of Chinese projects in full sample to Chinese projects 
-# in our sample by sector
+# Descriptive Stats 
 
 # Load Data --------------------------------------------------------------------
-chinese_aid <- readRDS(file.path(data_file_path, "chinese_aid_projects.Rds"))
+df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
-# Prep Data --------------------------------------------------------------------
-# For full and sub-sample, determine N and prop by sector
+# Subset Data ------------------------------------------------------------------
+# Subset to observations in regressions
+df <- df %>%
+  filter(!is.na(age),
+         !is.na(muslim),
+         !is.na(urban),
+         !is.na(male),
+         !is.na(distance_capital),
+         !is.na(in_leader_adm1)) 
 
-chinese_aid_sum <- chinese_aid %>%
-  group_by(sector) %>%
-  dplyr::summarise(N = n()) %>%
-  mutate(prop = N / sum(N)) %>%
-  dplyr::rename(n_all = N,
-                prop_all = prop) 
-
-chinese_aid_sub_sum <- chinese_aid %>%
-  filter(sample == 1) %>%
-  group_by(sector) %>%
-  dplyr::summarise(N = n()) %>%
-  mutate(prop = N / sum(N)) %>%
-  dplyr::rename(n_sample = N,
-                prop_sample = prop) 
-
-table_df <- merge(chinese_aid_sum,
-                  chinese_aid_sub_sum, 
-                  by = "sector",
-                  all=T) %>%
-  replace(., is.na(.), 0)
+sum_stat <- function(var, name, df){
   
-table_df$tex <- paste(table_df$sector, " & ",
-                      table_df$n_all, " & ",
-                      table_df$n_sample, " & ",
-                      table_df$prop_all %>% round(3), " & ",
-                      table_df$prop_sample %>% round(3), " \\\\ \n ")
+  rounds_with_var <- df$afro.round[!is.na(df[[var]])]
+  
+  latex <- paste(
+    name, " & ",
+    length(rounds_with_var) %>% prettyNum(big.mark=",",scientific=FALSE), " & ",
+    mean(df[[var]], na.rm=T) %>% round(2), " \\\\ "
+    #sd(df[[var]], na.rm=T) %>% round(2), " & ",
+    #min(df[[var]], na.rm=T), " & ",
+    #max(df[[var]], na.rm=T), " & ",
+    #min(rounds_with_var), " & ",
+    #max(rounds_with_var), " \\\\ "
+  )
+  
+  return(cat(latex))
+}
 
 
-# Make Table -------------------------------------------------------------------
 sink(file.path(tables_file_path, "table_a1.tex"))
 
-cat(" \\begin{tabular}{l cc cc} ")
-cat(" & \\multicolumn{2}{c}{N} & \\multicolumn{2}{c}{Proportion} \\\\ ")
-cat(" \\hline ")
-cat(" & All & Sample & All & Sample \\\\")
-cat(" \\hline ")
-for(i in 1:nrow(table_df)){
-  
-  cat(table_df$tex[i])
-  
-}
-cat(" \\hline ")
+cat(" \\begin{tabular}{l cc} \n")
+#cat(" &   &      &      &     &     & First     & Last     \\\\ \n ")
+#cat(" &   &      &      &     &     & round     & round    \\\\ \n ")
+#cat(" & N & Mean & S.D. & Min & Max & available & available \\\\ \n ")
+cat(" & N & Mean \\\\ \n ")
+cat("\\hline ")
 
-cat("Total & ",
-    sum(table_df$n_all), " & ",
-    sum(table_df$n_sample), " & ",
-    "1 & 1 \\\\")
+cat(" {\\bf Full Sample} & & \\\\ \n ")
+sum_stat("planned_near_china.pl10.30km.bin",   "\\% of respondents within 30km of a planned Chinese project",   df[df$sample_full %in% T,])
+sum_stat("completed_near_china.pl10.30km.bin", "\\% of respondents within 30km of a completed Chinese project", df[df$sample_full %in% T,])
 
-cat(" \\hline ")
-cat(" \\end{tabular} ")
+cat(" {\\bf Restricted Sample} & & \\\\ \n ")
+sum_stat("planned_near_china.pl10.30km.bin",   "\\% of respondents within 30km of a planned Chinese project",   df[df$sample_restricted %in% T,])
+sum_stat("completed_near_china.pl10.30km.bin", "\\% of respondents within 30km of a completed Chinese project", df[df$sample_restricted %in% T,])
 
+sum_stat("planned_near_usaid.30km.bin",   "\\% of respondents within 30km of a planned US project",   df[df$sample_restricted %in% T,])
+sum_stat("completed_near_usaid.30km.bin", "\\% of respondents within 30km of a completed US project", df[df$sample_restricted %in% T,])
+
+sum_stat("planned_near_ukaid.30km.bin",   "\\% of respondents within 30km of a planned UK project",   df[df$sample_restricted %in% T,])
+sum_stat("completed_near_ukaid.30km.bin", "\\% of respondents within 30km of a completed UK project", df[df$sample_restricted %in% T,])
+
+cat("\\hline ")
+cat(" \\end{tabular}")
 sink()
+
 

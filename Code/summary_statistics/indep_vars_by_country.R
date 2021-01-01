@@ -13,15 +13,13 @@ df <- df %>%
   dplyr::select(iso, age, muslim, urban, male, distance_capital, in_leader_adm1, 
                 riotsprotests_china_before1stplanned_30km_average) %>%
   group_by(iso) %>%
-  summarise_all(mean, na.rm=T) %>%
-  mutate(age = age %>% round(2),
-         muslim = muslim %>% round(2),
-         urban = urban %>% round(2),
-         male = male %>% round(3),
-         distance_capital = distance_capital %>% round(2),
-         in_leader_adm1 = in_leader_adm1 %>% round(2),
-         riotsprotests_china_before1stplanned_30km_average = riotsprotests_china_before1stplanned_30km_average %>% round(2)) %>%
-  
+  dplyr::summarise(age = age %>% mean() %>% round(2),
+                   muslim = muslim %>% mean() %>% round(2),
+                   urban = urban %>% mean() %>% round(2),
+                   male = male %>% mean() %>% round(3),
+                   distance_capital = distance_capital %>% mean() %>% round(2),
+                   in_leader_adm1 = in_leader_adm1 %>% mean() %>% round(2),
+                   riotsprotests_china_before1stplanned_30km_average = riotsprotests_china_before1stplanned_30km_average %>% mean() %>% round(2)) %>% 
   dplyr::rename(ISO = iso,
                 Age = age,
                 Muslim = muslim,

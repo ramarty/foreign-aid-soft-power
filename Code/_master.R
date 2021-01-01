@@ -4,7 +4,7 @@
 # Mater R Script 
 
 RUN_SCRIPTS <- F
-save_model <- T
+save_model <- F
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
@@ -12,10 +12,8 @@ github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
 
 code_file_path    <- file.path(github_file_path, "Code")
 data_file_path    <- file.path(dropbox_file_path, "Data")
-#results_file_path    <- file.path(dropbox_file_path, "Data_Results")
-tables_file_path  <- file.path(dropbox_file_path, "models_type_1", "tables")
-figures_file_path <- file.path(dropbox_file_path, "models_type_1", "figures")
-#outputs_file_path <- file.path(dropbox_file_path, "Outputs")
+tables_file_path  <- file.path(github_file_path, "Outputs", "tables")
+figures_file_path <- file.path(github_file_path, "Outputs", "figures")
 
 # Packages ---------------------------------------------------------------------
 library(dplyr)
@@ -35,6 +33,11 @@ library(moranfast)
 library(purrr)
 library(haven)
 library(ggpubr)
+library(rworldmap)
+library(rgeos)
+library(raster)
+library(gt)
+library(paletteer)
 
 source(file.path(code_file_path, "_functions.R"))
 source(file.path(code_file_path, "_functions_run_models.R"))
