@@ -18,6 +18,10 @@ df_results %>%
   filter(dv %in% c("china_positive_influence_index",
                    "china.best.dev.model",
                    "usa.best.dev.model")) %>%
+  mutate(dv_clean = dv_clean %>% 
+           factor(levels = c("Belives\nChinese presence\nis positive\n(index)",
+                             "Believes\nChinese model\nis best",
+                             "Believes\nUS model\nis best") %>% rev())) %>%
   make_plot_all(height = 6,
                 width = 10,
                 file_name = "figure_01.png")
