@@ -30,13 +30,13 @@ make_plot_all <- function(df,
                           file_name){
   
   df %>%
-    ggplot(aes(x = model, y = coef, ymin = ci2_5, ymax = ci97_5,
+    ggplot(aes(x = dv_clean, y = coef, ymin = ci2_5, ymax = ci97_5,
                group = var, color = var, shape = var, linetype = var)) +
     geom_hline(yintercept = 0, color = "gray50") +
     geom_linerange(position = position_dodge(width=.4)) +
     geom_point(position = position_dodge(width=.4)) +
     coord_flip() +
-    facet_wrap(~subset,
+    facet_wrap(~subset_clean,
                scales = "free_x") +
     labs(x = "",
          y="Coef (+/- 95% CI)",

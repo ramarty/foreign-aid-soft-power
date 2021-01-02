@@ -5,37 +5,52 @@ df_results <- readRDS(file.path(dropbox_file_path,
                                 "coefficients",
                                 "coefficients.Rds"))
 
-df_results <- df_results %>%
-  filter(buffer == 30)
-
 dv_lookup <- df_results %>%
   dplyr::select(dv, dv_clean) %>%
   distinct()
 
 # Figure 1 ---------------------------------------------------------------------
 df_results %>%
-  filter(dv %in% c("china_positive_influence_index",
+  filter(buffer == 30,
+         dv %in% c("china_positive_influence_index",
                    "china.best.dev.model",
                    "usa.best.dev.model")) %>%
   make_plot_all(height = 6,
                 width = 10,
                 file_name = "figure_01.png")
 
+
+
+
+df_results %>%
+  filter(dv %in% c("china_positive_influence_index",
+                   "china.best.dev.model",
+                   "usa.best.dev.model")) %>%
+  make_fig_full_restr(nrow_figure = 1,
+                      ncol_arrange = 2,
+                      height = 6,
+                      width = 16,
+                      file_name = "figure_01.png")
+
 # Figure 2 ---------------------------------------------------------------------
 df_results %>%
   filter(subset %in% c("full", "restricted"),
          dv %in% c("lib_dem_val_index"),
          plcompltd %in% F) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_02.png")
+  make_fig_full_restr(nrow_figure = 1,
+                      ncol_arrange = 2,
+                      height = 5,
+                      width = 10,
+                      file_name = "figure_02.png")
 
 # Figure 3 ---------------------------------------------------------------------
 df_results %>%
   filter(dv %in% c("formcolnpower.best.dev.model")) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_03.png")
+  make_fig_full_restr(nrow_figure = 1,
+                      ncol_arrange = 2,
+                      height = 6,
+                      width = 12,
+                      file_name = "figure_03.png")
 
 # Figure 4 ---------------------------------------------------------------------
 df_results %>%
@@ -46,10 +61,11 @@ df_results %>%
                    "posimage_noninterference", 
                    "posimage_productcost", 
                    "posimage_supportinintlaffiars")) %>%
-  mutate(dv_clean = dv_clean %>% str_replace_all("Positive Image:\n", "")) %>%
-  make_plot_all(height = 9,
-                width = 10,
-                file_name = "figure_04.png")
+  make_fig(nrow_figure = 1,
+           height = 6.5,
+           width = 12,
+           legend_pos = "bottom",
+           file_name = "figure_04.png")
 
 # Figure 5 ---------------------------------------------------------------------
 df_results %>%
@@ -60,10 +76,11 @@ df_results %>%
                    "negimage_productquality", 
                    "negimage_resourceextraction", 
                    "negimage_takingjobsbusiness")) %>%
-  mutate(dv_clean = dv_clean %>% str_replace_all("Negative Image:\n", "")) %>%
-  make_plot_all(height = 9,
-                width = 10,
-                file_name = "figure_05.png")
+  make_fig(nrow_figure = 1,
+           height = 6.5,
+           width = 12,
+           legend_pos = "bottom",
+           file_name = "figure_05.png")
 
 
 
