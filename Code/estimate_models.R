@@ -170,6 +170,14 @@ for(model_type in 1:4){
                          "Chinese Aid Completed") %>%
              str_replace("planned_near_china.pl10.km.bin", 
                          "Chinese Aid Planned") %>%
+             str_replace("completed_near_china.pl09.km.bin", 
+                         "Chinese Aid Completed") %>%
+             str_replace("planned_near_china.pl09.km.bin", 
+                         "Chinese Aid Planned") %>%
+             str_replace("completed_near_china.pl08.km.bin", 
+                         "Chinese Aid Completed") %>%
+             str_replace("planned_near_china.pl08.km.bin", 
+                         "Chinese Aid Planned") %>%
              str_replace("completed_near_china.plNA.km.bin", 
                          "Chinese Aid Completed") %>%
              str_replace("planned_near_china.plNA.km.bin", 

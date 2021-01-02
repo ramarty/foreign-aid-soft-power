@@ -1,5 +1,24 @@
-# Figures: Body of Paper
+# Figures: Appendix
 
+df_results <- readRDS(file.path(dropbox_file_path, 
+                                paste0("models_type_", 1), 
+                                "coefficients",
+                                "coefficients.Rds"))
+
+dv_lookup <- df_results %>%
+  dplyr::select(dv, dv_clean) %>%
+  distinct()
+
+# Figure 1 ---------------------------------------------------------------------
+df_results %>%
+  filter(buffer %in% 30,
+         planned_year %in% 2008,
+         dv %in% c("china_positive_influence_index",
+                   "china.best.dev.model",
+                   "usa.best.dev.model")) %>%
+  make_plot_all(height = 6,
+                width = 10,
+                file_name = "figure_a4.png")
 
 
 

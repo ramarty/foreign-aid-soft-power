@@ -6,7 +6,8 @@ df_results <- readRDS(file.path(dropbox_file_path,
                                 "coefficients.Rds"))
 
 df_results <- df_results %>%
-  filter(buffer == 30)
+  filter(buffer == 30) %>%
+  filter(is.na(planned_year) | planned_year %in% 2010)
 
 dv_lookup <- df_results %>%
   dplyr::select(dv, dv_clean) %>%
