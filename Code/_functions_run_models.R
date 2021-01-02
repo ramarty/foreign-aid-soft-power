@@ -161,7 +161,11 @@ run_r6 <- function(dv,
   lm.full.2008       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + ",                                                                               IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),], keepModel = T, keepX = FALSE, keepCX = FALSE) %>% small_felm()  
   lm.restricted.2008 <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl08.",buffer,"km.bin + planned_near_china.pl08.",buffer,"km.bin + completed_near_usaid.",buffer,"km.bin + planned_near_usaid.",buffer,"km.bin + ", IVs_china_usaid," | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_restricted %in% T) & (df$afro.round %in% 6),], keepModel = F, keepX = FALSE, keepCX = FALSE) %>% small_felm()  
   
+  lm.full.infra       <- felm(as.formula(paste0(dv, " ~ ",dv_splag," completed_near_china.pl10.",buffer,"km.construct.bin + planned_near_china.pl10.",buffer,"km.construct.bin + completed_near_china.pl10.",buffer,"km.noconstruct.bin + planned_near_china.pl10.",buffer,"km.noconstruct.bin + ", IVs_china,      " | ",FEs," | 0 | ", CLUSTER_VAR)), data=df[(df$sample_full %in% T)       & (df$afro.round %in% 6),], keepModel = F, keepX = FALSE, keepCX = FALSE) %>% small_felm() 
+  
   coefs <- bind_rows(
+    lm.full.infra       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2010, infrastructure = T),
+    
     lm.full.2010       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2010),
     lm.restricted.2010 %>% extract_coefs() %>% mutate(subset = "restricted", planned_year = 2010),
     lm.full.2009       %>% extract_coefs() %>% mutate(subset = "full", planned_year = 2009),

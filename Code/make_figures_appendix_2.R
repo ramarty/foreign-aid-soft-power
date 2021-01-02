@@ -7,6 +7,9 @@ df_results <- readRDS(file.path(dropbox_file_path,
                                 "coefficients",
                                 "coefficients.Rds"))
 
+df_results <- df_results %>%
+  filter(is.na(infrastructure))
+
 dv_lookup <- df_results %>%
   dplyr::select(dv, dv_clean) %>%
   distinct()
@@ -77,6 +80,9 @@ df_results <- readRDS(file.path(dropbox_file_path,
                                 "coefficients",
                                 "coefficients.Rds"))
 
+#df_results <- df_results %>%
+#  filter(is.na(infrastructure))
+
 df_results %>%
   filter(buffer %in% 30,
          subset %in% c("full", "restricted"),
@@ -93,6 +99,9 @@ df_results <- readRDS(file.path(dropbox_file_path,
                                 paste0("models_type_", 1), 
                                 "coefficients",
                                 "coefficients.Rds"))
+
+df_results <- df_results %>%
+  filter(is.na(infrastructure))
 
 df_results %>%
   filter(planned_year %in% 2010,
@@ -134,6 +143,9 @@ df_results <- readRDS(file.path(dropbox_file_path,
                                 paste0("models_type_", 3), 
                                 "coefficients",
                                 "coefficients.Rds"))
+
+#df_results <- df_results %>%
+#  filter(is.na(infrastructure))
 
 # Figure A13 -------------------------------------------------------------------
 df_results %>%

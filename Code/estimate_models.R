@@ -166,6 +166,16 @@ for(model_type in 1:4){
   # Restrict Variables -----------------------------------------------------------
   coefs_all_df <- coefs_all_df %>%
     mutate(var = var %>% 
+             str_replace("completed_near_china.pl10.km.construct.bin", 
+                         "Chinese Aid Completed [Infrastructure]") %>%
+             str_replace("planned_near_china.pl10.km.construct.bin", 
+                         "Chinese Aid Planned [Infrastructure]") %>%
+             
+             str_replace("completed_near_china.pl10.km.noconstruct.bin", 
+                         "Chinese Aid Completed [Non-Infrastructure]") %>%
+             str_replace("planned_near_china.pl10.km.noconstruct.bin", 
+                         "Chinese Aid Planned [Non-Infrastructure]") %>%
+             
              str_replace("completed_near_china.pl10.km.bin", 
                          "Chinese Aid Completed") %>%
              str_replace("planned_near_china.pl10.km.bin", 
@@ -194,6 +204,10 @@ for(model_type in 1:4){
                          "Chinese Aid Planned")) %>%
     filter(var %in% c("Chinese Aid Completed",
                       "Chinese Aid Planned",
+                      "Chinese Aid Completed [Infrastructure]",
+                      "Chinese Aid Planned [Infrastructure]",
+                      "Chinese Aid Completed [Non-Infrastructure]",
+                      "Chinese Aid Planned [Non-Infrastructure]",
                       "USA Aid Completed",
                       "USA Aid Planned",
                       "UK Aid Completed",
@@ -248,10 +262,10 @@ for(model_type in 1:4){
                     "coefficients.Rds"))
   
   write.csv(coefs_all_df,    
-          file.path(dropbox_file_path, 
-                    paste0("models_type_", model_type),
-                    "coefficients",
-                    "coefficients.csv"), row.names = F)
+            file.path(dropbox_file_path, 
+                      paste0("models_type_", model_type),
+                      "coefficients",
+                      "coefficients.csv"), row.names = F)
 }
 
 

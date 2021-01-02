@@ -7,7 +7,8 @@ df_results <- readRDS(file.path(dropbox_file_path,
 
 df_results <- df_results %>%
   filter(buffer == 30) %>%
-  filter(is.na(planned_year) | planned_year %in% 2010)
+  filter(is.na(planned_year) | planned_year %in% 2010) %>%
+  filter(is.na(infrastructure))
 
 dv_lookup <- df_results %>%
   dplyr::select(dv, dv_clean) %>%
