@@ -2,8 +2,8 @@
 # Great Power Competition in Africa in the Early 21st Century
 
 # Mater R Script 
-
-RUN_SCRIPTS <- F
+ESTIMATE_MODELS <- F
+RUN_TABLES_FIGURES <- F
 save_model <- F
 
 # Filepaths --------------------------------------------------------------------
@@ -69,25 +69,30 @@ CLUSTER_VAR <- "location_id" # "location_id" # townvill uniqueea_afroround
 #figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
 figure_colors <- c("firebrick2", "darkorange","dodgerblue4","green4") # mediumseagreen
 
-# Run Scripts ------------------------------------------------------------------
-if(RUN_SCRIPTS){
-  
-  ## Summary Stats
-  sum_stat_file_path <- file.path(code_file_path, "summary_statistics")
-  source(file.path(sum_stat_file_path, "table_a1.R"))
-  source(file.path(sum_stat_file_path, "table_a2.R"))
-  source(file.path(sum_stat_file_path, "table_a3.R"))
-  source(file.path(sum_stat_file_path, "table_a4.R"))
-  source(file.path(sum_stat_file_path, "table_a9.R"))
-  source(file.path(sum_stat_file_path, "indep_var_sum_stat.R"))
-  
-  ## Models
+# Run Scripts - Estimate Models ------------------------------------------------
+if(ESTIMATE_MODELS){
   source(file.path(code_file_path, "estimate_models.R"))
-  source(file.path(code_file_path, "make_figure.R"))
-  source(file.path(code_file_path, "make_tables.R"))
 }
 
-
-
-
+# Run Scripts - Results Tables/Figures -----------------------------------------
+if(RUN_TABLES_FIGURES){
+  source(file.path(code_file_path, "make_figures_body_of_paper.R"))
+  
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "figure_a1.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "figure_a2.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "figure_a3.R"))
+  
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a1.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a2.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a3.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a4.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a5.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a6.R"))
+  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a7.R"))
+  
+  source(file.path(code_file_path, "make_figures_appendix_2.R"))
+  source(file.path(code_file_path, "make_tables_appendix_2.R"))
+  
+  source(file.path(code_file_path, "make_figures_appendix_3.R"))
+}
 
