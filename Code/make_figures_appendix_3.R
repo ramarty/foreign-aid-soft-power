@@ -18,9 +18,10 @@ df_results %>%
          is.na(infrastructure),
          dv %in% c("china.help.country",
                    "usa.help.country")) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_a16.png")
+  make_plot_all(height = 4,
+                width = 7,
+                file_name = "figure_a16.png",
+                x_axis_breaks = 5)
 
 # Figure A17 -------------------------------------------------------------------
 df_results %>%
@@ -39,9 +40,10 @@ df_results %>%
                              "Chinese Aid Completed [Non-Infrastructure]",
                              "Chinese Aid Planned [Infrastructure]",
                              "Chinese Aid Completed [Infrastructure]") %>% rev())) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_a17.png")
+  make_plot_all(height = 4.5,
+                width = 9,
+                file_name = "figure_a17.png",
+                x_axis_breaks = 4)
 
 # Figure A18 -------------------------------------------------------------------
 df_results %>%
@@ -55,9 +57,10 @@ df_results %>%
            factor(levels = c("Believes\nChina is\ninfluencial\n(index)",
                              "Believes\nChinese model\nis most\ninfluential",
                              "Believes\nUS model\nis most\ninfluential") %>% rev())) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_a18.png")
+  make_plot_all(height = 4.5,
+                width = 8.5,
+                file_name = "figure_a18.png",
+                x_axis_breaks = 4)
 
 # Figure A19 -------------------------------------------------------------------
 df_results %>%
@@ -70,9 +73,10 @@ df_results %>%
                    "blvs_democ_best_system",
                    "blvs_elec_good"),
          plcompltd %in% F) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_a19.png")
+  make_plot_all(height = 7,
+                width = 8.75,
+                file_name = "figure_a19.png",
+                x_axis_breaks = 4)
 
 # Figure A20 -------------------------------------------------------------------
 df_results %>%
@@ -80,17 +84,18 @@ df_results %>%
          planned_year %in% 2010,
          is.na(infrastructure),
          dv %in% c("formcolnpower.most.influence")) %>%
-  make_plot_all(height = 6,
-                width = 10,
-                file_name = "figure_a20.png")
+  make_plot_all(height = 3,
+                width = 8.5,
+                file_name = "figure_a20.png",
+                x_axis_breaks = 3)
 
 # Figure A21 -------------------------------------------------------------------
 df_results %>%
   filter(buffer %in% 30,
          subset %in% c("restrictedusuk"),
          dv %in% c("lib_dem_val_index")) %>%
-  make_plot_all(height = 6,
-                width = 10,
+  make_plot_all(height = 3,
+                width = 6.75,
                 file_name = "figure_a21.png")
-
+ 
 

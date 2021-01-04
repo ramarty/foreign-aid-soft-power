@@ -45,6 +45,7 @@ cat(" {\\bf Full Sample} & & \\\\ \n ")
 sum_stat("planned_near_china.pl10.30km.bin",   "\\% of respondents within 30km of a planned Chinese project",   df[df$sample_full %in% T,])
 sum_stat("completed_near_china.pl10.30km.bin", "\\% of respondents within 30km of a completed Chinese project", df[df$sample_full %in% T,])
 
+cat("  & & \\\\ \n ")
 cat(" {\\bf Restricted Sample} & & \\\\ \n ")
 sum_stat("planned_near_china.pl10.30km.bin",   "\\% of respondents within 30km of a planned Chinese project",   df[df$sample_restricted %in% T,])
 sum_stat("completed_near_china.pl10.30km.bin", "\\% of respondents within 30km of a completed Chinese project", df[df$sample_restricted %in% T,])

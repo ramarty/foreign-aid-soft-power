@@ -3,7 +3,8 @@
 make_plot_all <- function(df,
                           height,
                           width,
-                          file_name){
+                          file_name,
+                          x_axis_breaks = 5){
   
   df %>%
     ggplot(aes(x = dv_clean, y = coef, ymin = ci2_5, ymax = ci97_5,
@@ -34,6 +35,7 @@ make_plot_all <- function(df,
     scale_linetype_manual(values=c("solid","dashed","solid","dashed")) +
     scale_shape_manual(values=c(16,17,16,17)) +
     scale_color_manual(values=figure_colors) +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = x_axis_breaks)) + 
     ggsave(file.path(figures_file_path, file_name),
            height = height, width = width)
   

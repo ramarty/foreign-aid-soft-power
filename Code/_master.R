@@ -39,9 +39,10 @@ library(raster)
 library(gt)
 library(paletteer)
 
-source(file.path(code_file_path, "_functions.R"))
-source(file.path(code_file_path, "_functions_run_models.R"))
-source(file.path(code_file_path, "_functions_make_figures.R"))
+source(file.path(code_file_path, "functions", "extract_coefs_from_felm.R"))
+source(file.path(code_file_path, "functions", "make_figures_all_buffers.R"))
+source(file.path(code_file_path, "functions", "make_figures_one_buffer.R"))
+source(file.path(code_file_path, "functions", "run_models.R"))
 
 # Parameters -------------------------------------------------------------------
 

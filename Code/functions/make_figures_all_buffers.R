@@ -1,12 +1,13 @@
 make_1_figure <- function(df,
                           nrow_figure,
-                          legend_pos = "right"){
+                          legend_pos = "right",
+                          x_axis_breaks){
   p <- df %>%
     ggplot(aes(x = buffer, y = coef, ymin = ci2_5, ymax = ci97_5,
                group = var, color = var, shape = var, linetype = var)) +
     geom_hline(yintercept = 0, color = "gray50") +
-    geom_linerange(position = position_dodge(width=2.5)) +
-    geom_point(position = position_dodge(width=2.5)) +
+    geom_linerange(position = position_dodge(width=2.9)) +
+    geom_point(position = position_dodge(width=2.9)) +
     coord_flip() +
     labs(x = "Buffer\nSize\n(km)",
          y="Coef (+/- 95% CI)",
@@ -30,6 +31,7 @@ make_1_figure <- function(df,
     scale_shape_manual(values=c(16,17,16,17)) +
     scale_color_manual(values=figure_colors) +
     theme(legend.position=legend_pos) +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = x_axis_breaks)) + 
     scale_x_reverse() + 
     facet_wrap(~dv_clean,
                nrow = nrow_figure,
@@ -44,16 +46,19 @@ make_fig_full_restr <- function(df,
                                 height,
                                 width,
                                 legend_pos = "right",
-                                file_name){
+                                file_name,
+                                x_axis_breaks){
   
   p_full <- df %>%
     filter(subset %in% "full") %>%
-    make_1_figure(nrow_figure = nrow_figure) +
+    make_1_figure(nrow_figure = nrow_figure,
+                  x_axis_breaks = x_axis_breaks) +
     theme(legend.position = "none")
   
   p_restricted <- df %>%
     filter(subset %in% "restricted") %>%
-    make_1_figure(nrow_figure = nrow_figure)
+    make_1_figure(nrow_figure = nrow_figure,
+                  x_axis_breaks = x_axis_breaks)
   
   p <- ggarrange(p_full,
                  p_restricted,
@@ -74,11 +79,13 @@ make_fig <- function(df,
                      height,
                      width,
                      legend_pos = "right",
-                     file_name){
+                     file_name,
+                     x_axis_breaks){
   
   p <- df %>%
     make_1_figure(nrow_figure = nrow_figure,
-                  legend_pos = legend_pos) 
+                  legend_pos = legend_pos,
+                  x_axis_breaks = x_axis_breaks) 
   
   ggsave(p, 
          filename = file.path(figures_file_path, file_name),
