@@ -3,7 +3,7 @@
 
 # Mater R Script 
 ESTIMATE_MODELS <- F
-RUN_TABLES_FIGURES <- F
+RUN_TABLES_FIGURES <- T
 save_model <- F
 
 # Filepaths --------------------------------------------------------------------
@@ -68,7 +68,7 @@ CLUSTER_VAR <- "location_id" # "location_id" # townvill uniqueea_afroround
 
 # Figure Colors
 #figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
-figure_colors <- c("firebrick2", "darkorange","dodgerblue4","green4") # mediumseagreen
+figure_colors <- c("firebrick2", "darkorange","dodgerblue4","green3") # mediumseagreen
 
 # Run Scripts - Estimate Models ------------------------------------------------
 if(ESTIMATE_MODELS){
@@ -79,17 +79,16 @@ if(ESTIMATE_MODELS){
 if(RUN_TABLES_FIGURES){
   source(file.path(code_file_path, "make_figures_body_of_paper.R"))
   
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "figure_a1.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "figure_a2.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "figure_a3.R"))
-  
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a1.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a2.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a3.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a4.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a5.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a6.R"))
-  source(file.path(code_file_path, make_tables_figures_appendix_1, "table_a7.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "figure_a1.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "figure_a2.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "figure_a3.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a1.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a2.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a3.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a4.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a5.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a6.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a7.R"))
   
   source(file.path(code_file_path, "make_figures_appendix_2.R"))
   source(file.path(code_file_path, "make_tables_appendix_2.R"))

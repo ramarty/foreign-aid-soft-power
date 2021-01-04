@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2020.5.9)  3 JAN 2021 19:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2020.5.9)  3 JAN 2021 20:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -372,15 +372,22 @@ File: figures/figure_05.png Graphic file (type png)
 <use figures/figure_05.png>
 Package pdftex.def Info: figures/figure_05.png used on input line 54.
 (pdftex.def)             Requested size: 433.62166pt x 464.56789pt.
- [4 <./figures/figure_04.png>] [5 <./figures/figure_05.png>] <figures/figure_a2
-.png, id=34, 803.0pt x 2840.6125pt>
+ [4 <./figures/figure_04.png>] [5 <./figures/figure_05.png>] <figures/figure_a1
+.png, id=34, 6022.5pt x 5420.25pt>
+File: figures/figure_a1.png Graphic file (type png)
+
+<use figures/figure_a1.png>
+Package pdftex.def Info: figures/figure_a1.png used on input line 71.
+(pdftex.def)             Requested size: 542.02501pt x 487.80145pt.
+
+<figures/figure_a2.png, id=35, 803.0pt x 2840.6125pt>
 File: figures/figure_a2.png Graphic file (type png)
 
 <use figures/figure_a2.png>
 Package pdftex.def Info: figures/figure_a2.png used on input line 77.
 (pdftex.def)             Requested size: 162.60915pt x 575.22089pt.
- [6]
-<figures/figure_a3.png, id=38, 1846.9pt x 600.2425pt>
+ [6 <./figures/figure_a1.png>]
+<figures/figure_a3.png, id=40, 1846.9pt x 600.2425pt>
 File: figures/figure_a3.png Graphic file (type png)
 
 <use figures/figure_a3.png>
@@ -390,84 +397,84 @@ Package pdftex.def Info: figures/figure_a3.png used on input line 83.
 (./tables/table_a1.tex) (./tables/table_a2.tex) [8 <./figures/figure_a3.png>]
 (./tables/table_a3.tex) [9] (./tables/table_a4.tex) (./tables/table_a5.tex)
 [10] (./tables/table_a6.tex) (./tables/table_a7.tex) [11] [12]
-<figures/figure_a4.png, id=60, 2559.5625pt x 1355.0625pt>
+<figures/figure_a4.png, id=62, 2559.5625pt x 1355.0625pt>
 File: figures/figure_a4.png Graphic file (type png)
 
 <use figures/figure_a4.png>
 Package pdftex.def Info: figures/figure_a4.png used on input line 157.
 (pdftex.def)             Requested size: 542.02501pt x 286.94933pt.
 
-<figures/figure_a5.png, id=61, 2559.5625pt x 903.375pt>
+<figures/figure_a5.png, id=63, 2559.5625pt x 903.375pt>
 File: figures/figure_a5.png Graphic file (type png)
 
 <use figures/figure_a5.png>
 Package pdftex.def Info: figures/figure_a5.png used on input line 163.
 (pdftex.def)             Requested size: 542.02501pt x 191.29955pt.
 
-<figures/figure_a6.png, id=62, 2559.5625pt x 1355.0625pt>
+<figures/figure_a6.png, id=64, 2559.5625pt x 1355.0625pt>
 File: figures/figure_a6.png Graphic file (type png)
 
 <use figures/figure_a6.png>
 Package pdftex.def Info: figures/figure_a6.png used on input line 169.
 (pdftex.def)             Requested size: 542.02501pt x 286.94933pt.
  [13 <./figures/figure_a4.png> <./figures/figure_a5.png>] <figures/figure_a7.pn
-g, id=69, 2559.5625pt x 903.375pt>
+g, id=71, 2559.5625pt x 903.375pt>
 File: figures/figure_a7.png Graphic file (type png)
 
 <use figures/figure_a7.png>
 Package pdftex.def Info: figures/figure_a7.png used on input line 175.
 (pdftex.def)             Requested size: 542.02501pt x 191.29955pt.
 
-<figures/figure_a8.png, id=70, 2559.5625pt x 903.375pt>
+<figures/figure_a8.png, id=72, 2559.5625pt x 903.375pt>
 File: figures/figure_a8.png Graphic file (type png)
 
 <use figures/figure_a8.png>
 Package pdftex.def Info: figures/figure_a8.png used on input line 181.
 (pdftex.def)             Requested size: 542.02501pt x 191.29955pt.
  [14 <./figures/figure_a6.png> <./figures/figure_a7.png>] <figures/figure_a9.pn
-g, id=76, 2559.5625pt x 903.375pt>
+g, id=78, 2559.5625pt x 903.375pt>
 File: figures/figure_a9.png Graphic file (type png)
 
 <use figures/figure_a9.png>
 Package pdftex.def Info: figures/figure_a9.png used on input line 187.
 (pdftex.def)             Requested size: 542.02501pt x 191.29955pt.
 
-<figures/figure_a10.png, id=77, 5420.25pt x 2107.875pt>
+<figures/figure_a10.png, id=79, 5420.25pt x 2107.875pt>
 File: figures/figure_a10.png Graphic file (type png)
 
 <use figures/figure_a10.png>
 Package pdftex.def Info: figures/figure_a10.png used on input line 193.
 (pdftex.def)             Requested size: 542.02501pt x 210.76768pt.
  [15 <./figures/figure_a8.png> <./figures/figure_a9.png>] <figures/figure_a11.p
-ng, id=83, 3312.375pt x 2107.875pt>
+ng, id=85, 3312.375pt x 2107.875pt>
 File: figures/figure_a11.png Graphic file (type png)
 
 <use figures/figure_a11.png>
 Package pdftex.def Info: figures/figure_a11.png used on input line 199.
 (pdftex.def)             Requested size: 433.62166pt x 275.93102pt.
 
-<figures/figure_a12.png, id=84, 3312.375pt x 2107.875pt>
+<figures/figure_a12.png, id=86, 3312.375pt x 2107.875pt>
 File: figures/figure_a12.png Graphic file (type png)
 
 <use figures/figure_a12.png>
 Package pdftex.def Info: figures/figure_a12.png used on input line 205.
 (pdftex.def)             Requested size: 433.62166pt x 275.93102pt.
  [16 <./figures/figure_a10.png> <./figures/figure_a11.png>] <figures/figure_a13
-.png, id=90, 2559.5625pt x 1355.0625pt>
+.png, id=92, 2559.5625pt x 1355.0625pt>
 File: figures/figure_a13.png Graphic file (type png)
 
 <use figures/figure_a13.png>
 Package pdftex.def Info: figures/figure_a13.png used on input line 211.
 (pdftex.def)             Requested size: 542.02501pt x 286.94933pt.
  [17 <./figures/figure_a12.png>]
-<figures/figure_a14.png, id=95, 2559.5625pt x 903.375pt>
+<figures/figure_a14.png, id=97, 2559.5625pt x 903.375pt>
 File: figures/figure_a14.png Graphic file (type png)
 
 <use figures/figure_a14.png>
 Package pdftex.def Info: figures/figure_a14.png used on input line 217.
 (pdftex.def)             Requested size: 542.02501pt x 191.29955pt.
 
-<figures/figure_a15.png, id=96, 2559.5625pt x 903.375pt>
+<figures/figure_a15.png, id=98, 2559.5625pt x 903.375pt>
 File: figures/figure_a15.png Graphic file (type png)
 
 <use figures/figure_a15.png>
@@ -477,42 +484,42 @@ Package pdftex.def Info: figures/figure_a15.png used on input line 223.
 re_a15.png>] (./tables/table_a9.tex)
 (./tables/table_a10.tex) [20] (./tables/table_a11.tex) (./tables/table_a12.tex)
 [21] (./tables/table_a13.tex) (./tables/table_a14.tex) [22]
-<figures/figure_a16.png, id=121, 2107.875pt x 1204.5pt>
+<figures/figure_a16.png, id=123, 2107.875pt x 1204.5pt>
 File: figures/figure_a16.png Graphic file (type png)
 
 <use figures/figure_a16.png>
 Package pdftex.def Info: figures/figure_a16.png used on input line 287.
 (pdftex.def)             Requested size: 433.62166pt x 247.76955pt.
 
-<figures/figure_a17.png, id=122, 2710.125pt x 1355.0625pt>
+<figures/figure_a17.png, id=124, 2710.125pt x 1355.0625pt>
 File: figures/figure_a17.png Graphic file (type png)
 
 <use figures/figure_a17.png>
 Package pdftex.def Info: figures/figure_a17.png used on input line 293.
 (pdftex.def)             Requested size: 542.02501pt x 271.00769pt.
 
-<figures/figure_a18.png, id=123, 2559.5625pt x 1355.0625pt>
+<figures/figure_a18.png, id=125, 2559.5625pt x 1355.0625pt>
 File: figures/figure_a18.png Graphic file (type png)
 
 <use figures/figure_a18.png>
 Package pdftex.def Info: figures/figure_a18.png used on input line 299.
 (pdftex.def)             Requested size: 542.02501pt x 286.94933pt.
  [23 <./figures/figure_a16.png> <./figures/figure_a17.png>] <figures/figure_a19
-.png, id=129, 2634.84375pt x 2107.875pt>
+.png, id=131, 2634.84375pt x 2107.875pt>
 File: figures/figure_a19.png Graphic file (type png)
 
 <use figures/figure_a19.png>
 Package pdftex.def Info: figures/figure_a19.png used on input line 305.
 (pdftex.def)             Requested size: 542.02501pt x 433.5967pt.
  [24 <./figures/figure_a18.png>]
-<figures/figure_a20.png, id=134, 2559.5625pt x 903.375pt>
+<figures/figure_a20.png, id=136, 2559.5625pt x 903.375pt>
 File: figures/figure_a20.png Graphic file (type png)
 
 <use figures/figure_a20.png>
 Package pdftex.def Info: figures/figure_a20.png used on input line 311.
 (pdftex.def)             Requested size: 542.02501pt x 191.29955pt.
  [25 <./figures/figure_a19.png>]
-<figures/figure_a21.png, id=140, 2032.59375pt x 903.375pt>
+<figures/figure_a21.png, id=142, 2032.59375pt x 903.375pt>
 File: figures/figure_a21.png Graphic file (type png)
 
 <use figures/figure_a21.png>
@@ -524,10 +531,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3390 strings out of 492995
- 50465 string characters out of 6132705
+ 3395 strings out of 492995
+ 50581 string characters out of 6132705
  126428 words of memory out of 5000000
- 6797 multiletter control sequences out of 15000+600000
+ 6801 multiletter control sequences out of 15000+600000
  11542 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,15n,37p,621b,267s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -541,10 +548,10 @@ ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loca
 l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
 /texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/t
 exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on results.pdf (26 pages, 3369504 bytes).
+Output written on results.pdf (26 pages, 7436925 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
+ 181 PDF objects out of 1000 (max. 8388607)
  90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 126 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 131 words of extra memory for PDF output out of 10000 (max. 10000000)
 

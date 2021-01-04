@@ -20,10 +20,6 @@ china_aid <- china_aid %>%
   group_by(latitude, longitude) %>%
   dplyr::summarise(geonameID = mean(geonameID))
 
-china_aid_buff <- china_aid
-coordinates(china_aid_buff) <- ~longitude+latitude
-china_aid_buff <- gBuffer(china_aid_buff, width=30/111.12)
-
 #### US/UK AMP Aid
 amp_aid <- read.csv(file.path(data_file_path, "aiddata_amp_allcountries_appended.csv"))
 amp_aid <- amp_aid[!(amp_aid$country %in% c("drc","central african republic","somolia")),]
@@ -43,34 +39,40 @@ uk_aid <- uk_aid %>%
 
 # Figure -----------------------------------------------------------------------
 #afrobarometer_color <- "#ee5f33"
-afrobarometer_color <- "burlywood1"
+afrobarometer_color <- "moccasin" # "ivory" # "burlywood1"
 china_color <- "red"
-us_color <- "deepskyblue"
-uk_color <- "forestgreen"
+us_color <- "deepskyblue1"
+uk_color <- "olivedrab2"
 
 fig <- ggplot() +
   geom_polygon(data=africa, aes(x=long, y=lat, group=group), 
-               fill="gray30", color="gray10", size=.3) +
+               fill="gray30", color="black", size=.4) + # .3
   #geom_polygon(data=africa[africa$ADMIN.1 %in% c("Burundi","Malawi", "Nigeria","Senegal","Sierra Leone","Uganda"),], 
   #             aes(x=long, y=lat, group=group, fill="Country with\nUS & UK Aid Data"), 
   #             color="gray40", size=1) +
-  geom_point(data=afro_all, aes(x=longitude, y=latitude,color="Afrobarometer\nSurvey Location"), alpha=0.3,  size=1.5) +
+  geom_point(data=afro_all, aes(x=longitude, y=latitude,color="Afrobarometer\nSurvey Location\n"), alpha=0.2,  size=2) +
   
-  geom_point(data=uk_aid, aes(x=longitude, y=latitude),       alpha=.7, size=2.5, color = "white") +
-  geom_point(data=us_aid, aes(x=longitude, y=latitude),       alpha=.7, size=2.5, color = "white") +
-  geom_point(data=china_aid, aes(x=longitude, y=latitude),    alpha=.7, size=2.5, color = "white") +
+  # Just for legend
+  geom_point(data=uk_aid, aes(x=longitude, y=latitude, color="UK Aid"),         alpha=1, size=0.1) +
+  geom_point(data=us_aid, aes(x=longitude, y=latitude, color="US Aid"),         alpha=1, size=0.1) +
+  geom_point(data=china_aid, aes(x=longitude, y=latitude, color="Chinese Aid"), alpha=1, size=0.1) +
   
-  geom_point(data=uk_aid, aes(x=longitude, y=latitude, color="UK Aid"),         alpha=.7, size=2) +
-  geom_point(data=us_aid, aes(x=longitude, y=latitude, color="US Aid"),         alpha=.7, size=2) +
-  geom_point(data=china_aid, aes(x=longitude, y=latitude, color="Chinese Aid"), alpha=.7, size=2) +
+  # 5.5 // 3 // 2.5
+  geom_point(data=uk_aid, aes(x=longitude, y=latitude),       alpha=1, size=6, color = "black", fill = uk_color, pch = 21) +
+  geom_point(data=us_aid, aes(x=longitude, y=latitude),       alpha=1, size=3.5,   color = "black", fill = us_color, pch = 21) +
+  geom_point(data=china_aid, aes(x=longitude, y=latitude),    alpha=1, size=3, color = "black", fill = china_color, pch = 21) +
   
-  geom_point(data=uk_aid, aes(x=longitude, y=latitude), color = uk_color,      alpha=.7, size=1) +
+  #geom_point(data=uk_aid, aes(x=longitude, y=latitude),       alpha=1, size=1.5, color = "black", fill = uk_color, pch = 21) +
+  #geom_point(data=us_aid, aes(x=longitude, y=latitude),       alpha=1, size=1.5, color = "white", fill = us_color, pch = 21) +
+  #geom_point(data=china_aid, aes(x=longitude, y=latitude),    alpha=1, size=1.5, color = "white", fill = china_color, pch = 21) +
+  
+  #geom_point(data=uk_aid, aes(x=longitude, y=latitude, color="UK Aid"),         alpha=1, size=1) +
   
   #geom_point(data=china_aid, aes(x=longitude, y=latitude), color=china_color,alpha=.3,size=3.5) +
   #geom_polygon(data=africa[africa$ADMIN.1 %in% c("Burundi","Malawi", "Nigeria","Senegal","Sierra Leone","Uganda"),], 
   #             aes(x=long, y=lat, group=group), 
   #             color="gray10", size=.1, fill=NA) +
-  scale_color_manual(values=c(afrobarometer_color, china_color, us_color, uk_color)) +
+  scale_color_manual(values=c(afrobarometer_color, china_color, uk_color, us_color)) +
   scale_fill_manual(values="gray80") +
   labs(color="", fill="", size="") +
   coord_quickmap() +
