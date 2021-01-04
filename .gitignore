@@ -42,4 +42,4 @@ vignettes/*.pdf
 *.csv
 *.Rds
 *.rds
-
+*.dta
