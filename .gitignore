@@ -39,6 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 # Data
-.csv
-.Rds
+*.csv
+*.Rds
+*.rds
 

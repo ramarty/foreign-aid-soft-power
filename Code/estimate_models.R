@@ -7,7 +7,7 @@ df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 for(model_type in 1:4){
   
-  results_file_path <- file.path(dropbox_file_path, 
+  results_file_path <- file.path(data_results_file_path, 
                                  paste0("models_type_", model_type),
                                  "models")
   
@@ -253,13 +253,13 @@ for(model_type in 1:4){
   
   # Export -----------------------------------------------------------------------
   saveRDS(coefs_all_df,    
-          file.path(dropbox_file_path, 
+          file.path(data_results_file_path, 
                     paste0("models_type_", model_type),
                     "coefficients",
                     "coefficients.Rds"))
   
   write.csv(coefs_all_df,    
-            file.path(dropbox_file_path, 
+            file.path(data_results_file_path, 
                       paste0("models_type_", model_type),
                       "coefficients",
                       "coefficients.csv"), row.names = F)

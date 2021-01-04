@@ -2,17 +2,20 @@
 # Great Power Competition in Africa in the Early 21st Century
 
 # Mater R Script 
+
+## Run scripts parameters
 ESTIMATE_MODELS <- F
-RUN_TABLES_FIGURES <- T
+RUN_TABLES_FIGURES <- F
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
 github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
 
-code_file_path    <- file.path(github_file_path, "Code")
-data_file_path    <- file.path(dropbox_file_path, "Data")
-tables_file_path  <- file.path(github_file_path, "Outputs", "tables")
-figures_file_path <- file.path(github_file_path, "Outputs", "figures")
+code_file_path    <- file.path(github_file_path, "code")
+data_results_file_path <- file.path(github_file_path, "results_data")
+data_file_path    <- file.path(dropbox_file_path, "Data") #TODO: Change
+tables_file_path  <- file.path(github_file_path, "outputs", "tables")
+figures_file_path <- file.path(github_file_path, "outputs", "figures")
 
 # Packages ---------------------------------------------------------------------
 library(dplyr)
