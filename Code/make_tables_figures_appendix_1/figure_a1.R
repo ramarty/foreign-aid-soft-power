@@ -42,21 +42,30 @@ uk_aid <- uk_aid %>%
   dplyr::summarise(even_split_commitments = mean(even_split_commitments))
 
 # Figure -----------------------------------------------------------------------
-afrobarometer_color <- "#ee5f33"
-china_color <- "deepskyblue"
-us_color <- "red"
-uk_color <- "green"
+#afrobarometer_color <- "#ee5f33"
+afrobarometer_color <- "burlywood1"
+china_color <- "red"
+us_color <- "deepskyblue"
+uk_color <- "forestgreen"
 
 fig <- ggplot() +
   geom_polygon(data=africa, aes(x=long, y=lat, group=group), 
-               fill="white", color="gray10", size=.3) +
+               fill="gray30", color="gray10", size=.3) +
   #geom_polygon(data=africa[africa$ADMIN.1 %in% c("Burundi","Malawi", "Nigeria","Senegal","Sierra Leone","Uganda"),], 
   #             aes(x=long, y=lat, group=group, fill="Country with\nUS & UK Aid Data"), 
   #             color="gray40", size=1) +
-  geom_point(data=afro_all, aes(x=longitude, y=latitude,color="Afrobarometer\nSurvey Location"), alpha=1,  size=.6) +
-  geom_point(data=china_aid, aes(x=longitude, y=latitude, color="Chinese Aid"),                  alpha=.7, size=1) +
-  geom_point(data=us_aid, aes(x=longitude, y=latitude, color="US Aid"),                          alpha=.7, size=1) +
-  geom_point(data=uk_aid, aes(x=longitude, y=latitude, color="UK Aid"),                          alpha=.7, size=1) +
+  geom_point(data=afro_all, aes(x=longitude, y=latitude,color="Afrobarometer\nSurvey Location"), alpha=0.3,  size=1.5) +
+  
+  geom_point(data=uk_aid, aes(x=longitude, y=latitude),       alpha=.7, size=2.5, color = "white") +
+  geom_point(data=us_aid, aes(x=longitude, y=latitude),       alpha=.7, size=2.5, color = "white") +
+  geom_point(data=china_aid, aes(x=longitude, y=latitude),    alpha=.7, size=2.5, color = "white") +
+  
+  geom_point(data=uk_aid, aes(x=longitude, y=latitude, color="UK Aid"),         alpha=.7, size=2) +
+  geom_point(data=us_aid, aes(x=longitude, y=latitude, color="US Aid"),         alpha=.7, size=2) +
+  geom_point(data=china_aid, aes(x=longitude, y=latitude, color="Chinese Aid"), alpha=.7, size=2) +
+  
+  geom_point(data=uk_aid, aes(x=longitude, y=latitude), color = uk_color,      alpha=.7, size=1) +
+  
   #geom_point(data=china_aid, aes(x=longitude, y=latitude), color=china_color,alpha=.3,size=3.5) +
   #geom_polygon(data=africa[africa$ADMIN.1 %in% c("Burundi","Malawi", "Nigeria","Senegal","Sierra Leone","Uganda"),], 
   #             aes(x=long, y=lat, group=group), 
@@ -66,13 +75,13 @@ fig <- ggplot() +
   labs(color="", fill="", size="") +
   coord_quickmap() +
   theme_void() +
-  theme(legend.text = element_text(color="black",size=30,family="Times New Roman"),
-        legend.box.background = element_rect(fill="white",color="black",size=.5),
+  theme(legend.text = element_text(color="white",size=30,family="Times New Roman"),
+        legend.box.background = element_rect(fill="black",color="white",size=.5),
         legend.margin = margin(6, 6, 6, 6),
-        legend.position = c(0.24, 0.17)) +
+        legend.position = c(0.24, 0.17),
+        plot.background = element_rect(color = "black", fill = "black")) +
   guides(size = guide_legend(override.aes = list(size = c(6))),
          color = guide_legend(override.aes = list(size = c(6))))
-ggsave(fig, filename="~/Desktop/afrofig.png", height=18,width=20,dpi=300)
 ggsave(fig, filename=file.path(figures_file_path, "figure_a1.png"), height=18,width=20,dpi=300)
 
 
