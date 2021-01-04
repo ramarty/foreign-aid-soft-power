@@ -1,12 +1,9 @@
 # Figure 2
 
+save_model <- T
+
 # Load Data --------------------------------------------------------------------
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
-
-#IVs_china
-#IVs_china_usaid
-#include_splag
-include_splag <- F
 
 for(model_type in 1:4){
   

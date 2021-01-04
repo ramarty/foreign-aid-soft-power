@@ -4,7 +4,6 @@
 # Mater R Script 
 ESTIMATE_MODELS <- F
 RUN_TABLES_FIGURES <- T
-save_model <- F
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
