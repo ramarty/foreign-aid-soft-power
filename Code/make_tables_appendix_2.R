@@ -9,7 +9,7 @@ splag <- "Y"
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 ## Paths
-models_path <- file.path(dropbox_file_path, paste0("models_type_", model_type), "models")
+models_path <- file.path(data_results_file_path, paste0("models_type_", model_type), "models")
 
 ## Function to load models
 load_models <- function(models_vec){
