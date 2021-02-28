@@ -46,7 +46,7 @@ uk_color <- "olivedrab2"
 
 fig <- ggplot() +
   geom_polygon(data=africa, aes(x=long, y=lat, group=group), 
-               fill="gray30", color="black", size=.4) + # .3
+               fill="gray50", color="black", size=.4) + # gray45
   #geom_polygon(data=africa[africa$ADMIN.1 %in% c("Burundi","Malawi", "Nigeria","Senegal","Sierra Leone","Uganda"),], 
   #             aes(x=long, y=lat, group=group, fill="Country with\nUS & UK Aid Data"), 
   #             color="gray40", size=1) +

@@ -4,8 +4,8 @@
 # Mater R Script 
 
 ## Run scripts parameters
-ESTIMATE_MODELS <- T
-RUN_TABLES_FIGURES <- T
+ESTIMATE_MODELS <- F
+RUN_TABLES_FIGURES <- F
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
@@ -13,9 +13,9 @@ github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
 
 code_file_path    <- file.path(github_file_path, "code")
 data_results_file_path <- file.path(github_file_path, "results_data")
-data_file_path    <- file.path(dropbox_file_path, "Data") #TODO: Change
-tables_file_path  <- file.path(github_file_path, "outputs", "tables")
-figures_file_path <- file.path(github_file_path, "outputs", "figures")
+data_file_path    <- file.path(dropbox_file_path, "Data") 
+tables_file_path  <- file.path(github_file_path, "output", "tables")
+figures_file_path <- file.path(github_file_path, "output", "figures")
 
 # Packages ---------------------------------------------------------------------
 library(dplyr)
@@ -29,6 +29,7 @@ library(ggthemes)
 library(hrbrthemes)
 library(tidyselect)
 library(labelled)
+library(tidyr)
 #library(devtools)
 #install_github('mcooper/moranfast')
 library(moranfast)

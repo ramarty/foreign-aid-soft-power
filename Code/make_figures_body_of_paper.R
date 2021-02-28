@@ -1,6 +1,6 @@
 # Figures: Body of Paper
 
-df_results <- readRDS(file.path(dropbox_file_path, 
+df_results <- readRDS(file.path(data_results_file_path, 
                                 paste0("models_type_", 1), 
                                 "coefficients",
                                 "coefficients.Rds"))

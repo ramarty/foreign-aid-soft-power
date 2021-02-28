@@ -8,13 +8,12 @@ chinese_aid <- chinese_aid %>%
   filter(sample == 1)
 
 # Stats ------------------------------------------------------------------------
-## If has start date, percent with completion date
+## If planned, percent with completion date
 chinese_aid %>%
   filter(planned_near_china.pl10 %in% 1) %>%
   pull(end_actual_year) %>%
   is.na %>% 
   ifelse(FALSE, TRUE) %>% # flip is.na, so TRUE is has completion date
   mean()
-
 
 
