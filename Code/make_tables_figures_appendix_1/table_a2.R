@@ -2,11 +2,11 @@
 
 # Load Data --------------------------------------------------------------------
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
-df <- df[df$afro.round != 1,]
 
 # Subset Data ------------------------------------------------------------------
 # Subset to observations in regressions
 df <- df %>%
+  filter(afro.round != 1) %>%
   filter(!is.na(age),
          !is.na(muslim),
          !is.na(urban),

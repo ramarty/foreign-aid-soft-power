@@ -31,6 +31,8 @@ df_results <- readRDS(file.path(data_results_file_path,
                                 "coefficients",
                                 "coefficients.Rds"))
 
+df_results <- df_results[is.na(df_results$plcompltd) | df_results$plcompltd %in% F,]
+
 df_results <- df_results %>%
   filter(buffer == 30) %>%
   filter(is.na(planned_year) | planned_year %in% 2010) %>%
@@ -69,6 +71,8 @@ df_results <- df_results %>%
 # 1. Load ----------------------------------------------------------------------
 df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
+df$lib_dem_val_index[df$afro.round %in% 6] <- NA # Only use rounds 2-5
+
 df <- df %>%
   filter(afro.round != 1) %>%
   filter(!is.na(age),
@@ -76,7 +80,7 @@ df <- df %>%
          !is.na(urban),
          !is.na(male),
          !is.na(distance_capital),
-         !is.na(in_leader_adm1))
+         !is.na(in_leader_adm1)) 
 
 # 2 Take average across different aid groups -----------------------------------
 # 2.1 All data -----------------------------------------------------------------
@@ -93,7 +97,6 @@ df_restricted <- df %>%
 dvs_means_all_df <- bind_rows(df_full,
                               df_restricted) %>%
   pivot_longer(cols = -subset) %>%
-  #mutate(aid_subset = "all") %>%
   filter(name %in% c(fig1_vars,
                      fig2_vars,
                      fig3_vars,
@@ -116,7 +119,6 @@ df_restricted <- df %>%
 dvs_means_usaid_df <- bind_rows(df_full,
                                 df_restricted) %>%
   pivot_longer(cols = -subset) %>%
-  #mutate(aid_subset = "usaid") %>%
   filter(name %in% c(fig1_vars,
                      fig2_vars,
                      fig3_vars,
@@ -139,7 +141,6 @@ df_restricted <- df %>%
 dvs_means_china.pl10_df <- bind_rows(df_full,
                                      df_restricted) %>%
   pivot_longer(cols = -subset) %>%
-  #mutate(aid_subset = "china.pl10") %>%
   filter(name %in% c(fig1_vars,
                      fig3_vars,
                      fig4_vars,
@@ -161,7 +162,6 @@ df_restricted <- df %>%
 dvs_means_china.plNA_df <- bind_rows(df_full,
                                      df_restricted) %>%
   pivot_longer(cols = -subset) %>%
-  #mutate(aid_subset = "china.plNA") %>%
   filter(name %in% fig2_vars)
 
 # 3. Merge and append ----------------------------------------------------------
@@ -193,8 +193,6 @@ df_results <- df_results %>%
          pchange_all     = (coef_diff)/dv_value_all * 100,
          pchange_planned = (coef_diff)/dv_value_planned * 100)
 
-df_results <- df_results[is.na(df_results$plcompltd) | df_results$plcompltd %in% F,]
-
 df_results <- df_results %>%
   dplyr::select(subset,
                 dv,
@@ -205,60 +203,67 @@ df_results <- df_results %>%
                 dv_value_planned,
                 pchange_all,
                 pchange_planned) %>%
-  mutate(country = case_when(country %in% "chinese" ~ "China",
-                             country %in% "usa" ~ "USA"),
+  mutate(country = case_when(country %in% "chinese" ~ "Chinese",
+                             country %in% "usa" ~ "US"),
          dv_clean = dv_clean %>% str_replace_all("\\n", "  ") %>% 
            str_replace_all("Positive Image: ", "") %>% 
            str_replace_all("Negative Image: ", "") %>% 
            str_squish() %>% 
            str_squish())
 
-df_results <- df_results %>%
-  mutate(tex = paste(dv_clean,
+pull_tex <- function(dv, 
+                     subset, 
                      country,
-                     coef_diff %>% round(3),
-                     dv_value_all %>% round(2),
-                     pchange_all %>% round(2) %>% paste("\\%"),
-                     dv_value_planned %>% round(2),
-                     pchange_planned %>% round(2) %>% paste("\\%"),
-                     sep = " & ") %>% paste("\\\\ \n "))
-
-pull_tex <- function(dv, subset, country){
-  df_results[((df_results$dv %in% dv) & 
-                (df_results$subset %in% subset) & 
-                (df_results$country %in% country)),] %>% 
+                     coef_round = 2){
+  
+  df_results_i <- df_results[((df_results$dv %in% dv) & 
+                                (df_results$subset %in% subset) & 
+                                (df_results$country %in% country)),] 
+  
+  df_results_i <- df_results_i %>%
+    mutate(tex = paste(dv_clean,
+                       country,
+                       coef_diff %>% round(coef_round) %>% format(scientific=F),
+                       dv_value_all %>% round(2),
+                       pchange_all %>% round(1) %>% paste0("\\%"),
+                       dv_value_planned %>% round(2),
+                       pchange_planned %>% round(1) %>% paste0("\\%"),
+                       sep = " & ") %>% paste("\\\\ \n "))
+  
+  df_results_i %>%
     pull(tex) %>% 
     cat()
+  
 }
 
-sink("~/Desktop/test/tables/table.tex")
+sink(file.path(tables_file_path, "table_magnitude_results.tex"))
 cat("\\begin{tabular}{lcc | cc  | cc} \n ")
+#cat("\\hline \n ")
+cat("  &  &   & \\multicolumn{2}{c|}{All Sample} & \\multicolumn{2}{c}{Respondents Near} \\\\ \n ")
+cat("  &  &   & \\multicolumn{2}{c|}{Respondents} & \\multicolumn{2}{c}{Planned Project} \\\\ \n ")
 cat("\\hline \n ")
-cat("Dependent Variable & Aid & Coef $\\Delta$  & \\multicolumn{2}{c}{All} & \\multicolumn{2}{c}{Respondents Near} \\\\ \n ")
-cat("                   &     & [Compl. - Pln.] & \\multicolumn{2}{c}{Respondents} & \\multicolumn{2}{c}{Planned Project} \\\\ \n ")
-cat("\\hline \n ")
-cat("                   &     &                & DV   & \\% $\\Delta$ & DV   & \\% $\\Delta$ \\\\ \n ")
-cat("                   &     &                & Mean & from DV       & Mean & from DV \\\\ \n ")
+cat("                    &      & Coef. Difference   & DV   & \\% $\\Delta$ & DV   & \\% $\\Delta$ \\\\ \n ")
+cat(" Dependent Variable & Aid  & [Compl. - Pln.]  & Mean & from DV       & Mean & from DV \\\\ \n ")
 cat("\\hline \n ")
 
 # FIGURE 1 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("\\multicolumn{5}{l|}{\\bf Effects of Chinese and US aid on perceptions of China and the US} & \\multicolumn{2}{l}{} \\\\ \n ")
 
 cat("\\multicolumn{3}{l|}{\\emph{Full Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
-pull_tex("china_positive_influence_index", "full", "China")
-pull_tex("china.best.dev.model",           "full", "China")
-pull_tex("usa.best.dev.model",             "full", "China")
+pull_tex("china_positive_influence_index", "full", "Chinese")
+pull_tex("china.best.dev.model",           "full", "Chinese")
+pull_tex("usa.best.dev.model",             "full", "Chinese")
 
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
 cat("\\multicolumn{3}{l|}{\\emph{Restricted Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("china_positive_influence_index", "restricted", "China")
-pull_tex("china.best.dev.model",           "restricted", "China")
-pull_tex("usa.best.dev.model",             "restricted", "China")
+pull_tex("china_positive_influence_index", "restricted", "Chinese")
+pull_tex("china.best.dev.model",           "restricted", "Chinese")
+pull_tex("usa.best.dev.model",             "restricted", "Chinese")
 
-pull_tex("china_positive_influence_index", "restricted", "USA")
-pull_tex("china.best.dev.model",           "restricted", "USA")
-pull_tex("usa.best.dev.model",             "restricted", "USA")
+pull_tex("china_positive_influence_index", "restricted", "US")
+pull_tex("china.best.dev.model",           "restricted", "US")
+pull_tex("usa.best.dev.model",             "restricted", "US")
 
 # FIGURE 2 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
@@ -266,13 +271,13 @@ cat("\\multicolumn{3}{l|}{\\bf Effects of Chinese and US aid on liberal democrat
 
 cat("\\multicolumn{3}{l|}{\\emph{Full Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("lib_dem_val_index", "full", "China")
+pull_tex("lib_dem_val_index", "full", "Chinese")
 
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
 cat("\\multicolumn{3}{l|}{\\emph{Restricted Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("lib_dem_val_index", "restricted", "China")
-pull_tex("lib_dem_val_index", "restricted", "USA")
+pull_tex("lib_dem_val_index", "restricted", "Chinese")
+pull_tex("lib_dem_val_index", "restricted", "US")
 
 # FIGURE 3 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
@@ -280,13 +285,13 @@ cat("\\multicolumn{5}{l|}{\\bf Effects of Chinese and US aid on perceptions of f
 
 cat("\\multicolumn{3}{l|}{\\emph{Full Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("formcolnpower.best.dev.model", "full", "China")
+pull_tex("formcolnpower.best.dev.model", "full", "Chinese")
 
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
 cat("\\multicolumn{3}{l|}{\\emph{Restricted Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("formcolnpower.best.dev.model", "restricted", "China")
-pull_tex("formcolnpower.best.dev.model", "restricted", "USA")
+pull_tex("formcolnpower.best.dev.model", "restricted", "Chinese")
+pull_tex("formcolnpower.best.dev.model", "restricted", "US")
 
 # FIGURE 4 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
@@ -294,12 +299,12 @@ cat("\\multicolumn{5}{l|}{\\bf Effects of Chinese aid on factors contributing to
 
 cat("\\multicolumn{3}{l|}{\\emph{Full Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("posimage_businessinvetment", "full", "China")
-pull_tex("posimage_chinesepeople", "full", "China")
-pull_tex("posimage_infordevinvetment", "full", "China")
-pull_tex("posimage_noninterference", "full", "China")
-pull_tex("posimage_productcost", "full", "China")
-pull_tex("posimage_supportinintlaffiars", "full", "China")
+pull_tex("posimage_productcost", "full", "Chinese")
+pull_tex("posimage_supportinintlaffiars", "full", "Chinese")
+pull_tex("posimage_noninterference", "full", "Chinese")
+pull_tex("posimage_chinesepeople", "full", "Chinese")
+pull_tex("posimage_infordevinvetment", "full", "Chinese")
+pull_tex("posimage_businessinvetment", "full", "Chinese")
 
 # FIGURE 5 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cat("\\multicolumn{3}{l|}{} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n") # Blank
@@ -307,12 +312,12 @@ cat("\\multicolumn{5}{l|}{\\bf Effects of Chinese aid on factors contributing to
 
 cat("\\multicolumn{3}{l|}{\\emph{Full Sample}} & \\multicolumn{2}{c|}{} & \\multicolumn{2}{c}{} \\\\ \n")
 
-pull_tex("negimage_chinesecitizenbehavior", "full", "China")
-pull_tex("negimage_cooperateundemocratic", "full", "China")
-pull_tex("negimage_landgrabbing", "full", "China")
-pull_tex("negimage_productquality", "full", "China")
-pull_tex("negimage_resourceextraction", "full", "China")
-pull_tex("negimage_takingjobsbusiness", "full", "China")
+pull_tex("negimage_productquality", "full", "Chinese")
+pull_tex("negimage_landgrabbing", "full", "Chinese")
+pull_tex("negimage_takingjobsbusiness", "full", "Chinese")
+pull_tex("negimage_resourceextraction", "full", "Chinese")
+pull_tex("negimage_cooperateundemocratic", "full", "Chinese")
+pull_tex("negimage_chinesecitizenbehavior", "full", "Chinese", 4)
 
 cat("\\hline \n ")
 cat("\\end{tabular} ")
