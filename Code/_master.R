@@ -5,7 +5,7 @@
 
 ## Run scripts parameters
 ESTIMATE_MODELS <- F
-RUN_TABLES_FIGURES <- F
+RUN_TABLES_FIGURES <- T
 
 # Filepaths --------------------------------------------------------------------
 dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
@@ -71,7 +71,8 @@ CLUSTER_VAR <- "location_id" # "location_id" # townvill uniqueea_afroround
 
 # Figure Colors
 #figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
-figure_colors <- c("firebrick2", "darkorange","dodgerblue4","green3") # mediumseagreen
+#figure_colors <- c("black", "darkorange","dodgerblue4","green3") # mediumseagreen
+figure_colors <- c("black", "black","gray65","gray65") # mediumseagreen
 
 # Run Scripts - Estimate Models ------------------------------------------------
 if(ESTIMATE_MODELS){
