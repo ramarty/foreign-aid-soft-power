@@ -94,10 +94,13 @@ if(RUN_TABLES_FIGURES){
   source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a5.R"))
   source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a6.R"))
   source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a7.R"))
+  source(file.path(code_file_path, "make_tables_figures_appendix_1", "table_a20.R"))
   
   source(file.path(code_file_path, "make_figures_appendix_2.R"))
   source(file.path(code_file_path, "make_tables_appendix_2.R"))
   
   source(file.path(code_file_path, "make_figures_appendix_3.R"))
+  
+  source(file.path(code_file_path, "make_tables_appendix_4.R"))
 }
 
