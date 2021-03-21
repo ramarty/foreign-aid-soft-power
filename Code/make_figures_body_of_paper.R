@@ -25,6 +25,7 @@ df_results %>%
                              "Believes\nUS model\nis best") %>% rev())) %>%
   make_plot_all(height = 4.5,
                 width = 8.5,
+                bw = T,
                 file_name = "figure_01.png",
                 x_axis_breaks = 4)
 
@@ -35,6 +36,7 @@ df_results %>%
          plcompltd %in% F) %>%
   make_plot_all(height = 3,
                 width = 8.5,
+                bw = T,
                 file_name = "figure_02.png",
                 x_axis_breaks = 3)
 
@@ -43,6 +45,7 @@ df_results %>%
   filter(dv %in% c("formcolnpower.best.dev.model")) %>%
   make_plot_all(height = 3,
                 width = 8.5,
+                bw = T,
                 file_name = "figure_03.png",
                 x_axis_breaks = 3)
 
@@ -58,6 +61,7 @@ df_results %>%
   mutate(dv_clean = dv_clean %>% str_replace_all("Positive Image:\n", "")) %>%
   make_plot_all(height = 7,
                 width = 7,
+                bw = T,
                 file_name = "figure_04.png")
 
 # Figure 5 ---------------------------------------------------------------------
@@ -72,6 +76,7 @@ df_results %>%
   mutate(dv_clean = dv_clean %>% str_replace_all("Negative Image:\n", "")) %>%
   make_plot_all(height = 7.5,
                 width = 7,
+                bw = T,
                 file_name = "figure_05.png")
 
 

@@ -4,7 +4,14 @@ make_plot_all <- function(df,
                           height,
                           width,
                           file_name,
-                          x_axis_breaks = 5){
+                          x_axis_breaks = 5,
+                          bw = F){
+  
+  if(bw){
+    figure_colors <- figure_colors_bw
+  } else{
+    figure_colors <- figure_colors_c
+  }
   
   df %>%
     ggplot(aes(x = dv_clean, y = coef, ymin = ci2_5, ymax = ci97_5,

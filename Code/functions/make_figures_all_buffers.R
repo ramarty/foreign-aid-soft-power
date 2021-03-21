@@ -1,7 +1,15 @@
 make_1_figure <- function(df,
                           nrow_figure,
                           legend_pos = "right",
-                          x_axis_breaks){
+                          x_axis_breaks,
+                          bw = F){
+  
+  if(bw){
+    figure_colors <- figure_colors_bw
+  } else{
+    figure_colors <- figure_colors_c
+  }
+  
   p <- df %>%
     ggplot(aes(x = buffer, y = coef, ymin = ci2_5, ymax = ci97_5,
                group = var, color = var, fill = var, shape = var, linetype = var)) +
@@ -52,18 +60,21 @@ make_fig_full_restr <- function(df,
                                 width,
                                 legend_pos = "right",
                                 file_name,
-                                x_axis_breaks){
+                                x_axis_breaks,
+                                bw = F){
   
   p_full <- df %>%
     filter(subset %in% "full") %>%
     make_1_figure(nrow_figure = nrow_figure,
-                  x_axis_breaks = x_axis_breaks) +
+                  x_axis_breaks = x_axis_breaks,
+                  bw = bw) +
     theme(legend.position = "none")
   
   p_restricted <- df %>%
     filter(subset %in% "restricted") %>%
     make_1_figure(nrow_figure = nrow_figure,
-                  x_axis_breaks = x_axis_breaks)
+                  x_axis_breaks = x_axis_breaks,
+                  bw = bw)
   
   p <- ggarrange(p_full,
                  p_restricted,
@@ -85,12 +96,14 @@ make_fig <- function(df,
                      width,
                      legend_pos = "right",
                      file_name,
-                     x_axis_breaks){
+                     x_axis_breaks,
+                     bw = F){
   
   p <- df %>%
     make_1_figure(nrow_figure = nrow_figure,
                   legend_pos = legend_pos,
-                  x_axis_breaks = x_axis_breaks) 
+                  x_axis_breaks = x_axis_breaks,
+                  bw = bw) 
   
   ggsave(p, 
          filename = file.path(figures_file_path, file_name),
