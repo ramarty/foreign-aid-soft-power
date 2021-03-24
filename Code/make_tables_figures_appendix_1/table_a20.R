@@ -236,7 +236,7 @@ pull_tex <- function(dv,
   
 }
 
-sink(file.path(tables_file_path, "table_magnitude_results.tex"))
+sink(file.path(tables_file_path, "table_a20.tex"))
 cat("\\begin{tabular}{lcc | cc  | cc} \n ")
 #cat("\\hline \n ")
 cat("  &  &   & \\multicolumn{2}{c|}{All Sample} & \\multicolumn{2}{c}{Respondents Near} \\\\ \n ")

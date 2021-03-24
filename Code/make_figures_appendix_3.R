@@ -20,7 +20,7 @@ df_results %>%
                    "usa.help.country")) %>%
   make_plot_all(height = 4,
                 width = 7,
-                file_name = "figure_a16.png",
+                file_name = "figure_a8.png", #CHANGED
                 x_axis_breaks = 5)
 
 # Figure A17 -------------------------------------------------------------------
@@ -42,7 +42,7 @@ df_results %>%
                              "Chinese Aid Completed [Infrastructure]") %>% rev())) %>%
   make_plot_all(height = 4.5,
                 width = 9,
-                file_name = "figure_a17.png",
+                file_name = "figure_a19.png", #CHANGED
                 x_axis_breaks = 4)
 
 # Figure A18 -------------------------------------------------------------------
@@ -75,7 +75,7 @@ df_results %>%
          plcompltd %in% F) %>%
   make_plot_all(height = 7,
                 width = 8.75,
-                file_name = "figure_a19.png",
+                file_name = "figure_a9.png", #CHANGED
                 x_axis_breaks = 4)
 
 # Figure A20 -------------------------------------------------------------------
@@ -96,6 +96,6 @@ df_results %>%
          dv %in% c("lib_dem_val_index")) %>%
   make_plot_all(height = 3,
                 width = 6.75,
-                file_name = "figure_a21.png")
+                file_name = "figure_a18.png") #CHANGED
  
 

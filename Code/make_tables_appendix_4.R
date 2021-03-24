@@ -51,7 +51,7 @@ stargazer(ml$china_positive_influence_index_full,
             c("Planned Year Cut Off",2010,2010,2010,2010,2010,2010),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_1full.tex"))
+          out=file.path(tables_file_path, "table_a12.tex"))
 
 rm(ml)
 gc(); gc()
@@ -91,7 +91,7 @@ stargazer(ml$china_positive_influence_index_restricted,
             c("Planned Year Cut Off",2010,2010,2010,2010,2010,2010),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_1restricted.tex"))
+          out=file.path(tables_file_path, "table_a13.tex"))
 
 rm(ml)
 gc(); gc()
@@ -120,7 +120,7 @@ stargazer(ml$lib_dem_val_index_full,
             c("Planned Year Cut Off","N/A","N/A","N/A","N/A","N/A","N/A"),
             c("Country Fixed Effects", "Y", "Y", "Y", "Y","Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer, buffer)),
-          out=file.path(tables_file_path, "table_mainresult_2full.tex"))
+          out=file.path(tables_file_path, "table_a14.tex"))
 
 rm(ml)
 gc(); gc()
@@ -154,7 +154,7 @@ stargazer(ml$lib_dem_val_index_restricted,
             c("Planned Year Cut Off","N/A","N/A","N/A","N/A","N/A","N/A"),
             c("Country Fixed Effects", "Y", "Y", "Y", "Y","Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_2restricted.tex"))
+          out=file.path(tables_file_path, "table_a15.tex"))
 
 rm(ml)
 gc(); gc()
@@ -182,7 +182,7 @@ stargazer(ml$formcolnpower.best.dev.model_full,
             c("Planned Year Cut Off",2010,2010),
             c("Country Fixed Effects", "Y", "Y"),
             c("Buffer",buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_3full.tex"))
+          out=file.path(tables_file_path, "table_a16.tex"))
 
 rm(ml)
 gc(); gc()
@@ -214,7 +214,7 @@ stargazer(ml$formcolnpower.best.dev.model_restricted,
             c("Planned Year Cut Off",2010,2010),
             c("Country Fixed Effects", "Y", "Y"),
             c("Buffer",buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_3restricted.tex"))
+          out=file.path(tables_file_path, "table_a17.tex"))
 
 rm(ml)
 gc(); gc()
@@ -257,7 +257,7 @@ stargazer(ml$posimage_productcost_full,
             c("Planned Year Cut Off",2010,2010,2010,2010,2010,2010),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_4full.tex"))
+          out=file.path(tables_file_path, "table_a18.tex"))
 
 rm(ml)
 gc(); gc()
@@ -300,7 +300,7 @@ stargazer(ml$negimage_productquality_full,
             c("Planned Year Cut Off",2010,2010,2010,2010,2010,2010),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
-          out=file.path(tables_file_path, "table_mainresult_5full.tex"))
+          out=file.path(tables_file_path, "table_a19.tex"))
 
 rm(ml)
 gc(); gc()

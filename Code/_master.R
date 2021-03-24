@@ -8,12 +8,11 @@ ESTIMATE_MODELS <- F
 RUN_TABLES_FIGURES <- T
 
 # Filepaths --------------------------------------------------------------------
-dropbox_file_path <- "~/Dropbox/China in Africa/Paper 2/paper_2_replication_package" 
 github_file_path <- "~/Documents/Github/foreign-aid-soft-power"
 
 code_file_path    <- file.path(github_file_path, "code")
 data_results_file_path <- file.path(github_file_path, "results_data")
-data_file_path    <- file.path(dropbox_file_path, "Data") 
+data_file_path    <- file.path(github_file_path, "data") 
 tables_file_path  <- file.path(github_file_path, "output", "tables")
 figures_file_path <- file.path(github_file_path, "output", "figures")
 

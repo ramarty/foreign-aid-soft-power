@@ -74,7 +74,7 @@ df_results %>%
          plcompltd %in% T) %>%
   make_plot_all(height = 3,
                 width = 8.5,
-                file_name = "figure_a8.png",
+                file_name = "figure_a10.png", #CHANGED
                 x_axis_breaks = 3)
 
 # ** ADM1 FE ===================================================================
@@ -95,7 +95,7 @@ df_results %>%
          plcompltd %in% F) %>%
   make_plot_all(height = 3,
                 width = 8.5,
-                file_name = "figure_a9.png",
+                file_name = "figure_a11.png", #CHANGED
                 x_axis_breaks = 3)
 
 # ** Varrying Buffers ==========================================================
@@ -122,7 +122,7 @@ df_results %>%
                       ncol_arrange = 2,
                       height = 7,
                       width = 18,
-                      file_name = "figure_a10.png",
+                      file_name = "figure_a12.png", #CHANGED
                       x_axis_breaks = 3)
 
 # Figure A11 -------------------------------------------------------------------
@@ -134,7 +134,7 @@ df_results %>%
                       ncol_arrange = 2,
                       height = 7,
                       width = 11,
-                      file_name = "figure_a11.png",
+                      file_name = "figure_a13.png", #CHANGED
                       x_axis_breaks = 4)
 
 # Figure A12 -------------------------------------------------------------------
@@ -145,7 +145,7 @@ df_results %>%
                       ncol_arrange = 2,
                       height = 7,
                       width = 11,
-                      file_name = "figure_a12.png",
+                      file_name = "figure_a14.png", #CHANGED
                       x_axis_breaks = 4)
 
 # ** Additional Controls =======================================================
@@ -170,7 +170,7 @@ df_results %>%
                              "Believes\nUS model\nis best") %>% rev())) %>%
   make_plot_all(height = 4.5,
                 width = 8.5,
-                file_name = "figure_a13.png",
+                file_name = "figure_a15.png", #CHANGED
                 x_axis_breaks = 4)
 
 # Figure A14 -------------------------------------------------------------------
@@ -181,7 +181,7 @@ df_results %>%
          plcompltd %in% F) %>%
   make_plot_all(height = 3,
                 width = 8.5,
-                file_name = "figure_a14.png",
+                file_name = "figure_a16.png", #CHANGED
                 x_axis_breaks = 3)
 
 # Figure A15 --------------------------------------------------------------------
@@ -191,7 +191,7 @@ df_results %>%
          dv %in% c("formcolnpower.best.dev.model")) %>%
   make_plot_all(height = 3,
                 width = 8.5,
-                file_name = "figure_a15.png",
+                file_name = "figure_a17.png", #CHANGED
                 x_axis_breaks = 3)
 
 

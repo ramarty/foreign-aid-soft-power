@@ -57,7 +57,7 @@ stargazer(ml$china_positive_influence_index_full,
             c("Spatial Lag of Dep Var Included", splag, splag, splag, splag, splag, splag),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
-          out=file.path(tables_file_path, "table_a9.tex"))
+          out=file.path(tables_file_path, "table_a9_full.tex")) #CHANGED
 
 rm(ml)
 gc(); gc()
@@ -103,7 +103,7 @@ stargazer(ml$china_positive_influence_index_restricted,
             c("Spatial Lag of Dep Var Included", splag, splag, splag, splag, splag, splag),
             c("Country Fixed Effects", "Y", "Y", "Y","Y", "Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer,buffer,buffer)),
-          out=file.path(tables_file_path, "table_a10.tex"))
+          out=file.path(tables_file_path, "table_a9_restricted.tex")) #CHANGED
 
 rm(ml)
 gc(); gc()
@@ -136,7 +136,7 @@ stargazer(ml$lib_dem_val_index_full,
             c("Spatial Lag of Dep Var Included", splag, splag, splag, splag, splag, splag),
             c("Country Fixed Effects", "Y", "Y", "Y", "Y","Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer, buffer)),
-          out=file.path(tables_file_path, "table_a11.tex"))
+          out=file.path(tables_file_path, "table_a10_full.tex")) #CHANGED
 
 rm(ml)
 gc(); gc()
@@ -174,7 +174,7 @@ stargazer(ml$lib_dem_val_index_restricted,
             c("Spatial Lag of Dep Var Included", splag, splag, splag, splag, splag, splag),
             c("Country Fixed Effects", "Y", "Y", "Y", "Y","Y", "Y"),
             c("Buffer",buffer,buffer,buffer,buffer, buffer,buffer)),
-          out=file.path(tables_file_path, "table_a12.tex"))
+          out=file.path(tables_file_path, "table_a10_restricted.tex")) #CHANGED
 
 rm(ml)
 gc(); gc()
@@ -206,7 +206,7 @@ stargazer(ml$formcolnpower.best.dev.model_full,
             c("Spatial Lag of Dep Var Included", splag, splag),
             c("Country Fixed Effects", "Y", "Y"),
             c("Buffer",buffer,buffer)),
-          out=file.path(tables_file_path, "table_a13.tex"))
+          out=file.path(tables_file_path, "table_a11_full.tex")) #CHANGED
 
 rm(ml)
 gc(); gc()
@@ -242,7 +242,7 @@ stargazer(ml$formcolnpower.best.dev.model_restricted,
             c("Spatial Lag of Dep Var Included", splag, splag),
             c("Country Fixed Effects", "Y", "Y"),
             c("Buffer",buffer,buffer)),
-          out=file.path(tables_file_path, "table_a14.tex"))
+          out=file.path(tables_file_path, "table_a11_restricted.tex")) #CHANGED
 
 rm(ml)
 gc(); gc()
