@@ -29,9 +29,8 @@ library(hrbrthemes)
 library(tidyselect)
 library(labelled)
 library(tidyr)
-#library(devtools)
-#install_github('mcooper/moranfast')
-library(moranfast)
+library(devtools)
+library(moranfast) #install_github('mcooper/moranfast')
 library(purrr)
 library(haven)
 library(ggpubr)
@@ -62,17 +61,14 @@ IVs_china_usaid <- c("age", "muslim", "urban", "male",
   paste(collapse = " + ")
 
 # Fixed effects
-# !!!! In 01_clean_data_for_replication, removed end changing location_id
-FEs <- "iso + afro.round" # "iso + afro.round",  uniqueea_afroround; NAME_1
+FEs <- "iso + afro.round" 
 
 # Cluster variables
-CLUSTER_VAR <- "location_id" # "location_id" # townvill uniqueea_afroround
+CLUSTER_VAR <- "location_id" 
 
 # Figure Colors
-#figure_colors <- c("darkorange3", "darkorange","dodgerblue4","dodgerblue2")
-#figure_colors <- c("black", "darkorange","dodgerblue4","green3") # mediumseagreen
-figure_colors_bw <- c("black", "black","gray65","gray65") # mediumseagreen
-figure_colors_c <- c("firebrick2", "darkorange","dodgerblue4","green3") # mediumseagreen
+figure_colors_bw <- c("black", "black","gray65","gray65") 
+figure_colors_c <- c("firebrick2", "darkorange","dodgerblue4","green3") 
 
 # Run Scripts - Estimate Models ------------------------------------------------
 if(ESTIMATE_MODELS){

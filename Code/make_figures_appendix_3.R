@@ -42,25 +42,8 @@ df_results %>%
                              "Chinese Aid Completed [Infrastructure]") %>% rev())) %>%
   make_plot_all(height = 4.5,
                 width = 9,
-                file_name = "figure_a19.png", #CHANGED
+                file_name = "figure_a19.png", 
                 x_axis_breaks = 4)
-
-# Figure A18 -------------------------------------------------------------------
-# df_results %>%
-#   filter(buffer %in% 30,
-#          planned_year %in% 2010,
-#          is.na(infrastructure),
-#          dv %in% c("china_influential_index",
-#                    "china.most.influence",
-#                    "usa.most.influence")) %>%
-#   mutate(dv_clean = dv_clean %>% 
-#            factor(levels = c("Believes\nChina is\ninfluencial\n(index)",
-#                              "Believes\nChinese model\nis most\ninfluential",
-#                              "Believes\nUS model\nis most\ninfluential") %>% rev())) %>%
-#   make_plot_all(height = 4.5,
-#                 width = 8.5,
-#                 file_name = "figure_a18.png",
-#                 x_axis_breaks = 4)
 
 # Figure A19 -------------------------------------------------------------------
 df_results %>%
@@ -75,19 +58,8 @@ df_results %>%
          plcompltd %in% F) %>%
   make_plot_all(height = 7,
                 width = 8.75,
-                file_name = "figure_a9.png", #CHANGED
+                file_name = "figure_a9.png",
                 x_axis_breaks = 4)
-
-# Figure A20 -------------------------------------------------------------------
-# df_results %>%
-#   filter(buffer %in% 30,
-#          planned_year %in% 2010,
-#          is.na(infrastructure),
-#          dv %in% c("formcolnpower.most.influence")) %>%
-#   make_plot_all(height = 3,
-#                 width = 8.5,
-#                 file_name = "figure_a20.png",
-#                 x_axis_breaks = 3)
 
 # Figure A21 -------------------------------------------------------------------
 df_results %>%

@@ -41,8 +41,6 @@ cat(" &   &      &      &     &     & round     & round    \\\\ \n ")
 cat(" & N & Mean & S.D. & Min & Max & available & available \\\\ \n ")
 cat("\\hline ")
 
-#cat(" & & & & & & & \\\\ \n ")
-#cat(" \\multicolumn{8}{l}{\\bf Liberal democractic values} \\\\ \n ")
 sum_stat("age",     "Age", df)
 sum_stat("muslim",     "Muslim", df)
 sum_stat("urban",     "Urban", df)

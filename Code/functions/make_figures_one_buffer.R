@@ -41,9 +41,7 @@ make_plot_all <- function(df,
            linetype = guide_legend(reverse=T),
            pch = guide_legend(reverse=T),
            fill = guide_legend(reverse=T)) +
-    #scale_linetype_manual(values=c("solid","dashed","solid","dashed")) +
     scale_linetype_manual(values=c("solid","solid","solid","solid")) +
-    #scale_shape_manual(values=c(16,17,16,17)) +
     scale_shape_manual(values=c(16,24,16,24)) +
     scale_fill_manual(values=c("black", "white", "black", "white")) +
     scale_color_manual(values=figure_colors) +

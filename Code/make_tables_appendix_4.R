@@ -6,7 +6,6 @@ model_type <- 1
 buffer <- 30
 ROUND_NUM <- 2
 splag <- "N"
-#df <- readRDS(file.path(data_file_path, "afro_china_data.Rds"))
 
 ## Paths
 models_path <- file.path(data_results_file_path, paste0("models_type_", model_type), "models")
